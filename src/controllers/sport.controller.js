@@ -1,19 +1,8 @@
-// member.controller.js
-const MemberService = require("../services/member.service");
+const SportService = require("../services/sport.service");
 
-exports.get_list = function (req, res) {
-  MemberService.getAllMembers(function (result) {
-    if (result.status === "success") {
-      res.status(200).json({ result: result.result });
-    } else if (result.status === "error") {
-      res.status(404).json({ message: result.message });
-    }
-  });
-};
-
-exports.create = function (req, res) {
-  const newMember = req.body;
-  MemberService.createMember(newMember, function (result) {
+exports.create_sport = function (req, res) {
+  const newSport = req.body;
+  SportService.createSport(newSport, function (result) {
     if (result.status === "success") {
       res.status(200).json({ message: result.message });
     } else if (result.status === "error") {
@@ -22,9 +11,9 @@ exports.create = function (req, res) {
   });
 };
 
-exports.get_member = function (req, res) {
-  const memberId = req.params.id;
-  MemberService.getMemberById(memberId, function (result) {
+exports.get_sport = function (req, res) {
+  const sportId = req.params.id;
+  SportService.getSportById(sportId, function (result) {
     if (result.status === "success") {
       res.status(200).json({ result: result.result });
     } else if (result.status === "error") {
@@ -33,10 +22,20 @@ exports.get_member = function (req, res) {
   });
 };
 
-exports.update_member = function (req, res) {
-  const memberId = req.params.id;
-  const updatedMember = req.body;
-  MemberService.updateMember(memberId, updatedMember, function (result) {
+exports.get_all_sports = function (req, res) {
+  SportService.getAllSports(function (result) {
+    if (result.status === "success") {
+      res.status(200).json({ result: result.result });
+    } else if (result.status === "error") {
+      res.status(404).json({ message: result.message });
+    }
+  });
+};
+
+exports.update_sport = function (req, res) {
+  const sportId = req.params.id;
+  const updatedSport = req.body;
+  SportService.updateSport(sportId, updatedSport, function (result) {
     if (result.status === "success") {
       res.status(200).json({ message: result.message });
     } else if (result.status === "error") {
@@ -45,9 +44,9 @@ exports.update_member = function (req, res) {
   });
 };
 
-exports.delete_member = function (req, res) {
-  const memberId = req.params.id;
-  MemberService.deleteMember(memberId, function (result) {
+exports.delete_sport = function (req, res) {
+  const sportId = req.params.id;
+  SportService.deleteSport(sportId, function (result) {
     if (result.status === "success") {
       res.status(200).json({ message: result.message });
     } else if (result.status === "error") {

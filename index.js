@@ -6,7 +6,12 @@ const bodyParser = require("body-parser");
 const db = require("./src/common/connect");
 const passport = require("./src/common/passport");
 const { ensureAuthenticated } = require("./src/common/authMiddleware");
-const membeRoutes = require("./src/routers/member.router");
+const memberRoutes = require("./src/routers/member.router");
+const walletRoutes = require("./src/routers/wallet.router");
+const areaRoutes = require("./src/routers/area.router");
+const buildingRoutes = require("./src/routers/building.router");
+const sportRoutes = require("./src/routers/sport.router");
+const yardRoutes = require("./src/routers/yard.router");
 
 const PORT = process.env.PORT || 3000;
 
@@ -22,7 +27,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //Import api
-app.use("/api", membeRoutes);
+app.use("/api", memberRoutes);
+app.use("/api", walletRoutes);
+app.use("/api", areaRoutes);
+app.use("/api", buildingRoutes);
+app.use("/api", sportRoutes);
+app.use("/api", yardRoutes);
 
 // Route xử lý đăng nhập
 app.post(
@@ -32,10 +42,6 @@ app.post(
     res.json({ message: "Login successful", user: req.user });
   }
 );
-
-app.get("/", ensureAuthenticated, (req, res) => {
-  res.send("Hello, World!");
-});
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

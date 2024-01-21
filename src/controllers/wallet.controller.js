@@ -1,8 +1,7 @@
-// member.controller.js
-const MemberService = require("../services/member.service");
+const WalletService = require("../services/wallet.service");
 
 exports.get_list = function (req, res) {
-  MemberService.getAllMembers(function (result) {
+  WalletService.getAllWallets(function (result) {
     if (result.status === "success") {
       res.status(200).json({ result: result.result });
     } else if (result.status === "error") {
@@ -12,8 +11,8 @@ exports.get_list = function (req, res) {
 };
 
 exports.create = function (req, res) {
-  const newMember = req.body;
-  MemberService.createMember(newMember, function (result) {
+  const newWallet = req.body;
+  WalletService.createWallet(newWallet, function (result) {
     if (result.status === "success") {
       res.status(200).json({ message: result.message });
     } else if (result.status === "error") {
@@ -22,9 +21,9 @@ exports.create = function (req, res) {
   });
 };
 
-exports.get_member = function (req, res) {
-  const memberId = req.params.id;
-  MemberService.getMemberById(memberId, function (result) {
+exports.get_wallet = function (req, res) {
+  const walletId = req.params.id;
+  WalletService.getWalletById(walletId, function (result) {
     if (result.status === "success") {
       res.status(200).json({ result: result.result });
     } else if (result.status === "error") {
@@ -33,10 +32,10 @@ exports.get_member = function (req, res) {
   });
 };
 
-exports.update_member = function (req, res) {
-  const memberId = req.params.id;
-  const updatedMember = req.body;
-  MemberService.updateMember(memberId, updatedMember, function (result) {
+exports.update_wallet = function (req, res) {
+  const walletId = req.params.id;
+  const updatedWallet = req.body;
+  WalletService.updateWallet(walletId, updatedWallet, function (result) {
     if (result.status === "success") {
       res.status(200).json({ message: result.message });
     } else if (result.status === "error") {
@@ -45,9 +44,9 @@ exports.update_member = function (req, res) {
   });
 };
 
-exports.delete_member = function (req, res) {
-  const memberId = req.params.id;
-  MemberService.deleteMember(memberId, function (result) {
+exports.delete_wallet = function (req, res) {
+  const walletId = req.params.id;
+  WalletService.deleteWallet(walletId, function (result) {
     if (result.status === "success") {
       res.status(200).json({ message: result.message });
     } else if (result.status === "error") {
