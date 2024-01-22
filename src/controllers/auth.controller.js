@@ -1,5 +1,6 @@
 // auth.controller.js
 const AuthService = require("../services/auth.service");
+const MemberService = require("../services/member.service");
 
 exports.login_member = function (req, res) {
   const { email, password } = req.body;
@@ -24,6 +25,15 @@ exports.login_admin = function (req, res) {
       // Đăng nhập thất bại, trả về thông báo lỗi
       res.status(401).send({ message: data.message });
     }
+  });
+};
+
+exports.registerMember = function (req, res) {
+  const newMember = req.body;
+
+  // Gọi service để xử lý đăng ký thành viên
+  MemberService.createMember(newMember, (result) => {
+    res.status(result.status === "success" ? 200 : 400).json(result);
   });
 };
 
