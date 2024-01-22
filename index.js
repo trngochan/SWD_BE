@@ -12,6 +12,8 @@ const areaRoutes = require("./src/routers/area.router");
 const buildingRoutes = require("./src/routers/building.router");
 const sportRoutes = require("./src/routers/sport.router");
 const yardRoutes = require("./src/routers/yard.router");
+const authRoutes = require("./src/routers/auth.router");
+const authMiddleware = require("./src/common/authMiddleware");
 
 const PORT = process.env.PORT || 3000;
 
@@ -27,12 +29,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //Import api
-app.use("/api", memberRoutes);
-app.use("/api", walletRoutes);
-app.use("/api", areaRoutes);
-app.use("/api", buildingRoutes);
-app.use("/api", sportRoutes);
-app.use("/api", yardRoutes);
+
+app.use("/api", authMiddleware.authenticateToken, memberRoutes);
+app.use("/api", authMiddleware.authenticateToken, walletRoutes);
+app.use("/api", authMiddleware.authenticateToken, areaRoutes);
+app.use("/api", authMiddleware.authenticateToken, buildingRoutes);
+app.use("/api", authMiddleware.authenticateToken, sportRoutes);
+app.use("/api", authMiddleware.authenticateToken, yardRoutes);
+app.use("/api", authMiddleware.authenticateToken, authRoutes);
 
 // Route xử lý đăng nhập
 app.post(

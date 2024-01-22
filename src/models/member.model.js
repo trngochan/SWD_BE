@@ -122,4 +122,33 @@ Member.deleteMember = function (memberId, callback) {
   }
 };
 
+Member.getMemberByEmail = function (email, callback) {
+  try {
+    db.query(
+      "SELECT * FROM Member WHERE email = ?",
+      email,
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({
+            status: "error",
+            message: "Error getting member by email",
+          });
+        } else {
+          if (result.length > 0) {
+            // Nếu có dữ liệu trả về
+            callback({ status: "success", result: result[0] });
+          } else {
+            // Nếu không có dữ liệu
+            callback({ status: "error", message: "Member not found" });
+          }
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    callback({ status: "error", message: "Error getting member by email" });
+  }
+};
+
 module.exports = Member;

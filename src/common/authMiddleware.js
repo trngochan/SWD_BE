@@ -1,12 +1,18 @@
-const passport = require("passport");
+// authMiddleware.js
+const jwt = require("jsonwebtoken");
 
-// Middleware kiểm tra xác thực bằng Passport
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  } else {
-    res.status(401).json({ message: "Unauthorized" });
+exports.authenticateToken = function (req, res, next) {
+  const token = req.header("Authorization");
+
+  if (!token) {
+    return res.status(401).json({ message: "Missing authorization token" });
   }
-}
 
-module.exports = { ensureAuthenticated };
+  jwt.verify(token, "your-secret-key", (err, user) => {
+    if (err) {
+      return res.status(403).json({ message: "Invalid token" });
+    }
+    req.user = user;
+    next();
+  });
+};
