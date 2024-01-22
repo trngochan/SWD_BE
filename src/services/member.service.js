@@ -7,7 +7,24 @@ class MemberService {
   }
 
   static createMember(newMember, callback) {
-    MemberModel.createMember(newMember, callback);
+    MemberModel.emailExists(newMember, function (emailExistsResult) {
+      if (emailExistsResult.status === "error") {
+        callback(emailExistsResult);
+      }
+
+      if (emailExistsResult.status === "success") {
+        if (emailExistsResult.exists) {
+          callback({
+            status: "error",
+            message: "Email already exists",
+          });
+        } else {
+          MemberModel.createMember(newMember, function (createMemberResult) {
+            callback(createMemberResult);
+          });
+        }
+      }
+    });
   }
 
   static getMemberById(memberId, callback) {

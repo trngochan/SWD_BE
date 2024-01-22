@@ -1,4 +1,5 @@
 const db = require("../common/connect");
+const jwt = require("jsonwebtoken");
 
 const Member = function (member) {
   this.id = member.id;
@@ -65,10 +66,37 @@ Member.createMember = function (newMember, callback) {
       if (err) {
         callback({ status: "error", message: "Error creating member" });
       } else {
-        callback({
-          status: "success",
-          message: "Created member successfully",
-        });
+        // Truy vấn thông tin của user vừa được tạo
+        db.query(
+          "SELECT email, id FROM Member WHERE id = ?",
+          [result.insertId],
+          function (err, userResult) {
+            if (err) {
+              callback({
+                status: "error",
+                message: "Error retrieving created member",
+              });
+            } else {
+              // Trả về thông tin user vừa được tạo
+              const createdUser = userResult[0];
+              // Tạo token
+              const token = jwt.sign(
+                { memberId: userResult.id },
+                "your-secret-key",
+                {
+                  expiresIn: "1h", // Thời gian hết hạn của token
+                }
+              );
+              callback({
+                status: "success",
+                message: "Created member successfully",
+                user: createdUser,
+                role: "user",
+                token: token,
+              });
+            }
+          }
+        );
       }
     });
   } catch (error) {
@@ -148,6 +176,31 @@ Member.getMemberByEmail = function (email, callback) {
   } catch (error) {
     console.error(error);
     callback({ status: "error", message: "Error getting member by email" });
+  }
+};
+
+Member.emailExists = function (newMember, callback) {
+  try {
+    db.query(
+      "SELECT * FROM Member WHERE email = ?",
+      [newMember.email],
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({ status: "error", message: "An error occurred" });
+        } else {
+          if (result.length > 0) {
+            // Email đã tồn tại
+            callback({ status: "success", exists: true });
+          } else {
+            // Email chưa tồn tại
+            callback({ status: "success", exists: false });
+          }
+        }
+      }
+    );
+  } catch (error) {
+    callback({ status: "error", message: "Error checking email existence" });
   }
 };
 
