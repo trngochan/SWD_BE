@@ -2,19 +2,19 @@ const express = require("express");
 const router = express.Router();
 const ClubController = require("../controllers/club.controller");
 
-// Lấy danh sách tất cả thành viên
+// Lấy danh sách tất cả club
 router.get("/clubs", ClubController.get_list);
 
-// Tạo mới thành viên
+// Tạo mới club
 router.post("/clubs", ClubController.create);
 
-// Lấy thông tin của một thành viên cụ thể
+// Lấy thông tin của một club cụ thể
 router.get("/clubs/:id", ClubController.get_club);
 
-// Cập nhật thông tin của một thành viên
+// Cập nhật thông tin của một club
 router.put("/clubs/:id", ClubController.update_club);
 
-// Xóa một thành viên
+// Xóa một club
 router.delete("/clubs/:id", ClubController.delete_club);
 
 module.exports = router;
