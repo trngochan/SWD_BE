@@ -11,6 +11,11 @@ const sportRoutes = require("./src/routers/sport.router");
 const yardRoutes = require("./src/routers/yard.router");
 const authRoutes = require("./src/routers/auth.router");
 const authMiddleware = require("./src/common/authMiddleware");
+const db = require("./src/common/connect");
+const passport = require("./src/common/passport");
+const { ensureAuthenticated } = require("./src/common/authMiddleware");
+const tranpointRoutes = require("./src/routers/tranpoint.router");
+const transactionHistoryPoint = require("./src/routers/transactionHistoryPoint.router");
 
 const PORT = process.env.PORT || 3000;
 
@@ -24,6 +29,9 @@ app.use(
 );
 
 //Import api
+app.use("/api", membeRoutes);
+app.use("/api", tranpointRoutes);
+app.use("/api", transactionHistoryPoint);
 
 app.use("/api", authRoutes);
 app.use("/api", authMiddleware.authenticateToken, memberRoutes);
