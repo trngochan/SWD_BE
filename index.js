@@ -3,6 +3,8 @@ const helmet = require("helmet");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+const cors = require("cors");
+
 const memberRoutes = require("./src/routers/member.router");
 const walletRoutes = require("./src/routers/wallet.router");
 const areaRoutes = require("./src/routers/area.router");
@@ -15,6 +17,7 @@ const authMiddleware = require("./src/common/authMiddleware");
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+app.use(cors({ credentials: true, origin: true }));
 app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.json());
