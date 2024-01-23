@@ -5,7 +5,6 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-
 const tranpointRoutes = require("./src/routers/tranpoint.router");
 const transactionHistoryPointRoutes = require("./src/routers/transactionHistoryPoint.router");
 const clubRoutes = require("./src/routers/club.router");
@@ -21,12 +20,6 @@ const sportRoutes = require("./src/routers/sport.router");
 const yardRoutes = require("./src/routers/yard.router");
 const authRoutes = require("./src/routers/auth.router");
 const authMiddleware = require("./src/common/authMiddleware");
-
-
-const db = require("./src/common/connect");
-const passport = require("./src/common/passport");
-const { ensureAuthenticated } = require("./src/common/authMiddleware");
-
 
 const PORT = process.env.PORT || 3000;
 
