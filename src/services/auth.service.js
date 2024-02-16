@@ -23,6 +23,7 @@ exports.login_member = function (email, password, callback) {
             name: member.name,
             role: "user",
             email: member.email,
+            image: member.image,
           },
         });
       } else {
