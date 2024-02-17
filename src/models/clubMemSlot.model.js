@@ -54,7 +54,8 @@ ClubMemSlot.getClubMemSlotById = function (clubMemSlotId, callback) {
 };
 
 ClubMemSlot.createClubMemSlot = function (newClubMemSlot, callback) {
-  console.log(newClubMemSlot);
+  newClubMemSlot.status=1;
+  newClubMemSlot.dateTime= new Date();
   try {
     db.query("INSERT INTO ClubMemSlot SET ?", newClubMemSlot, function (err, result) {
       if (err) {

@@ -56,6 +56,8 @@ Club.getClubById = function (clubId, callback) {
 };
 
 Club.createClub = function (newClub, callback) {
+  newClub.status=1;
+  newClub.dateTime= new Date();
   console.log(newClub);
   try {
     db.query("INSERT INTO Club SET ?", newClub, function (err, result) {

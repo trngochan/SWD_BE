@@ -60,7 +60,8 @@ Member.getMemberById = function (memberId, callback) {
 };
 
 Member.createMember = function (newMember, callback) {
-  console.log(newMember);
+  newMember.status=1;
+  newMember.dateTime= new Date();
   try {
     db.query("INSERT INTO Member SET ?", newMember, function (err, result) {
       if (err) {

@@ -53,6 +53,8 @@ Yard.getYardById = function (yardId, callback) {
 };
 
 Yard.createYard = function (newYard, callback) {
+  newYard.status=1;
+  newYard.dateTime= new Date();
   try {
     db.query("INSERT INTO Yard SET ?", newYard, function (err, result) {
       if (err) {

@@ -9,6 +9,8 @@ const Area = function (area) {
 };
 
 Area.createArea = function (newArea, callback) {
+  newArea.status=1;
+  newArea.dateTime= new Date();
   try {
     db.query("INSERT INTO Area SET ?", newArea, function (err, result) {
       if (err) {

@@ -9,6 +9,8 @@ const Building = function (building) {
 };
 
 Building.createBuilding = function (newBuilding, callback) {
+  newBuilding.status=1;
+  newBuilding.dateTime= new Date();
   try {
     db.query("INSERT INTO Building SET ?", newBuilding, function (err, result) {
       if (err) {

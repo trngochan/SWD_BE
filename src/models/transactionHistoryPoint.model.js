@@ -56,6 +56,8 @@ TransactionHistoryPoint.getTransactionHistoryPointById = function (transactionHi
 };
 
 TransactionHistoryPoint.createTransactionHistoryPoint = function (newTransactionHistoryPoint, callback) {
+  newTransactionHistoryPoint.status=1;
+  newTransactionHistoryPoint.dateTime= new Date();
   console.log(newTransactionHistoryPoint);
   try {
     db.query("INSERT INTO TransactionHistoryPoint SET ?", newTransactionHistoryPoint, function (err, result) {
