@@ -55,6 +55,8 @@ Wallet.getWalletById = function (walletId, callback) {
 };
 
 Wallet.createWallet = function (newWallet, callback) {
+  newWallet.status=1;
+  newWallet.dateTime= new Date();
   try {
     db.query("INSERT INTO Wallet SET ?", newWallet, function (err, result) {
       if (err) {

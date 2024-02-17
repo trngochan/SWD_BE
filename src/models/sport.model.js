@@ -10,6 +10,8 @@ const Sport = function (sport) {
 };
 
 Sport.createSport = function (newSport, callback) {
+  newSport.status=1;
+  newSport.dateTime= new Date();
   try {
     db.query("INSERT INTO Sport SET ?", newSport, function (err, result) {
       if (err) {

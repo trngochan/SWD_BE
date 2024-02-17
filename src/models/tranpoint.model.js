@@ -52,6 +52,8 @@ Tranpoint.getTranpointById = function (tranpointId, callback) {
 };
 
 Tranpoint.createTranpoint = function (newTranpoint, callback) {
+  newTranpoint.status=1;
+  newTranpoint.dateTime= new Date();
   console.log(newTranpoint);
   try {
     db.query("INSERT INTO Tranpoint SET ?", newTranpoint, function (err, result) {
