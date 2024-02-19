@@ -21,6 +21,18 @@ class ClubMemberService {
   static deleteClubMember(clubMemberId, callback) {
     ClubMemberModel.deleteClubMember(clubMemberId, callback);
   }
+
+  static check_join(idMember, idClub, callback) {
+    ClubMemberModel.check_join(idMember, idClub, callback);
+  }
+
+  static join_club(body, callback) {
+    ClubMemberModel.createClubMember(body, callback);
+  }
+
+  static leaving_club(body, callback) {
+    ClubMemberModel.leaving_club(body, callback);
+  }
 }
 
 module.exports = ClubMemberService;

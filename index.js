@@ -34,22 +34,26 @@ app.use(
 );
 
 //Import api
-app.use("/api", memberRoutes);
-app.use("/api", tranpointRoutes);
+app.use("/api", authRoutes);
 app.use("/api", tranpointRoutes);
 app.use("/api", transactionHistoryPointRoutes);
 app.use("/api", clubRoutes);
 app.use("/api", clubMemberRoutes);
 app.use("/api", clubMemSlotRoutes);
 app.use("/api", slotRoutes);
+// authMiddleware.authenticateToken
+// authMiddleware.authenticateToken
+// authMiddleware.authenticateToken
+// authMiddleware.authenticateToken
+// authMiddleware.authenticateToken
+// authMiddleware.authenticateToken
 
-app.use("/api", authRoutes);
-app.use("/api", authMiddleware.authenticateToken, memberRoutes);
-app.use("/api", authMiddleware.authenticateToken, walletRoutes);
-app.use("/api", authMiddleware.authenticateToken, areaRoutes);
-app.use("/api", authMiddleware.authenticateToken, buildingRoutes);
-app.use("/api", authMiddleware.authenticateToken, sportRoutes);
-app.use("/api", authMiddleware.authenticateToken, yardRoutes);
+app.use("/api", memberRoutes);
+app.use("/api", walletRoutes);
+app.use("/api", areaRoutes);
+app.use("/api", buildingRoutes);
+app.use("/api", sportRoutes);
+app.use("/api", yardRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

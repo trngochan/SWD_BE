@@ -10,7 +10,7 @@ const Admin = function (admin) {
 Admin.getByUsername = function (username, callback) {
   try {
     db.query(
-      "SELECT * FROM Admin WHERE username = ?",
+      "SELECT * FROM Admin WHERE username = ? and STATUS = 1",
       username, // Sử dụng prepared statements
       function (err, result) {
         if (err) {

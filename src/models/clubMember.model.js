@@ -36,7 +36,10 @@ ClubMember.getClubMemberById = function (clubMemberId, callback) {
       function (err, result) {
         if (err) {
           console.error(err);
-          callback({ status: "error", message: "Error getting clubMember by ID" });
+          callback({
+            status: "error",
+            message: "Error getting clubMember by ID",
+          });
         } else {
           if (result.length > 0) {
             // Nếu có dữ liệu trả về
@@ -55,25 +58,31 @@ ClubMember.getClubMemberById = function (clubMemberId, callback) {
 };
 
 ClubMember.createClubMember = function (newClubMember, callback) {
-  newClubMember.status=1;
-  newClubMember.dateTime= new Date();
   try {
-    db.query("INSERT INTO ClubMember SET ?", newClubMember, function (err, result) {
-      if (err) {
-        callback({ status: "error", message: "Error creating clubMember" });
-      } else {
-        callback({
-          status: "success",
-          message: "Created clubMember successfully",
-        });
+    db.query(
+      "INSERT INTO ClubMember SET ?",
+      newClubMember,
+      function (err, result) {
+        if (err) {
+          callback({ status: "error", message: "Error creating clubMember" });
+        } else {
+          callback({
+            status: "success",
+            message: "Created clubMember successfully",
+          });
+        }
       }
-    });
+    );
   } catch (error) {
     callback({ status: "error", message: "Error creating clubMember" });
   }
 };
 
-ClubMember.updateClubMember = function (clubMemberId, updatedClubMember, callback) {
+ClubMember.updateClubMember = function (
+  clubMemberId,
+  updatedClubMember,
+  callback
+) {
   try {
     db.query(
       "UPDATE ClubMember SET ? WHERE id = ?",
@@ -145,6 +154,66 @@ ClubMember.getClubMemberByEmail = function (email, callback) {
   } catch (error) {
     console.error(error);
     callback({ status: "error", message: "Error getting clubMember by email" });
+  }
+};
+
+ClubMember.check_join = function (idMember, idClub, callback) {
+  try {
+    db.query(
+      "SELECT * FROM ClubMember WHERE memberId = ? and clubId = ? and status = 1",
+      [idMember, idClub], // Truyền mảng chứa cả hai giá trị vào đây
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({
+            status: "error",
+            message: "Error getting clubMember by email",
+          });
+        } else {
+          if (result.length > 0) {
+            // Nếu có dữ liệu trả về
+            callback({ status: "success", result: 1 });
+          } else {
+            // Nếu không có dữ liệu
+            callback({ status: "success", result: 0 });
+          }
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    callback({ status: "error", message: "Error getting clubMember" });
+  }
+};
+
+ClubMember.leaving_club = function (body, callback) {
+  try {
+    console.log(body);
+    db.query(
+      "UPDATE `ClubMember` SET `status` = 0 WHERE `memberId` = ? AND `clubId` = ? and status = 1",
+      [body.memberId, body.clubId],
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({
+            status: "error",
+            message: "Error updating clubMember status",
+          });
+        } else {
+          // Kiểm tra số dòng bị ảnh hưởng bởi truy vấn UPDATE
+          if (result.affectedRows > 0) {
+            // Nếu có dòng bị ảnh hưởng, tức là truy vấn đã thực hiện thành công
+            callback({ status: "success", result: 1 });
+          } else {
+            // Nếu không có dòng nào bị ảnh hưởng, tức là không tìm thấy dữ liệu phù hợp để cập nhật
+            callback({ status: "success", result: 0 });
+          }
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    callback({ status: "error", message: "Error updating clubMember status" });
   }
 };
 

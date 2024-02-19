@@ -11,10 +11,22 @@ router.post("/clubMembers", ClubMemberController.create);
 // Lấy thông tin của một ClubMembers cụ thể
 router.get("/clubMembers/:id", ClubMemberController.get_clubMember);
 
+// kiem tra xem member nay da join vao club hay chuwa
+router.get(
+  "/clubMembers/check_join/:id_member/:id_club",
+  ClubMemberController.check_join
+);
+
+// member roi clb
+router.put("/clubMembers/leaving_club/", ClubMemberController.leaving_club);
+
 // Cập nhật thông tin của một ClubMembers
 router.put("/clubMembers/:id", ClubMemberController.update_clubMember);
 
 // Xóa một ClubMembers
 router.delete("/clubMembers/:id", ClubMemberController.delete_clubMember);
+
+// kiem tra xem member nay da join vao club hay chuwa
+router.post("/clubMembers/join_club/", ClubMemberController.join_club);
 
 module.exports = router;

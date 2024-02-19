@@ -39,5 +39,5 @@ exports.registerMember = function (req, res) {
 
 exports.logout = function (req, res) {
   // TODO: Thực hiện các thao tác cần thiết để đăng xuất
-  res.send({ message: "Đăng xuất thành công" });
+  res.status(200).json({ message: "Đăng xuất thành công" });
 };
