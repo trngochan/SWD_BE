@@ -34,8 +34,8 @@ exports.get_clubMemSlot = function (req, res) {
 };
 
 exports.getNumberOfSlot = function (req, res) {
-  const clubMemSlotId = req.params.idSlot;
-  ClubMemSlotService.getNumberOfSlot(idSlot, function (result) {
+  const SlotId = req.params.idslot;
+  ClubMemSlotService.getNumberOfSlot(SlotId, function (result) {
     if (result.status === "success") {
       res.status(200).json({ result: result.result });
     } else if (result.status === "error") {

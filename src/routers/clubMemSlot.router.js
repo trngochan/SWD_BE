@@ -19,7 +19,7 @@ router.delete("/clubMemSlots/:id", ClubMemSlotController.delete_clubMemSlot);
 
 // get number of slot
 router.get(
-  "/clubMemSlots/getNumberOfSlot/:idSlot",
+  "/clubMemSlots/getNumberOfSlot/:idslot",
   ClubMemSlotController.getNumberOfSlot
 );
 
