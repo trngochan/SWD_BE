@@ -29,4 +29,10 @@ router.delete("/clubMembers/:id", ClubMemberController.delete_clubMember);
 // kiem tra xem member nay da join vao club hay chuwa
 router.post("/clubMembers/join_club/", ClubMemberController.join_club);
 
+// getCLubMebers by idMember, idClub
+router.get(
+  "/clubMembers/getByIdMemberClub/:idMember/:idClub",
+  ClubMemberController.getByIdMemberClub
+);
+
 module.exports = router;

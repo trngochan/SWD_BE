@@ -33,6 +33,18 @@ exports.get_clubMember = function (req, res) {
   });
 };
 
+exports.getByIdMemberClub = function (req, res) {
+  const clubId = req.params.idClub;
+  const MemberId = req.params.idMember;
+  ClubMemberService.getByIdMemberClub(clubId, MemberId, function (result) {
+    if (result.status === "success") {
+      res.status(200).json({ result: result.result });
+    } else if (result.status === "error") {
+      res.status(404).json({ message: result.message });
+    }
+  });
+};
+
 exports.update_clubMember = function (req, res) {
   const clubMemberId = req.params.id;
   const updatedClubMember = req.body;

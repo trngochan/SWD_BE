@@ -15,6 +15,10 @@ class ClubMemberService {
     ClubMemberModel.getClubMemberById(clubMemberId, callback);
   }
 
+  static getByIdMemberClub(clubId, MemberId, callback) {
+    ClubMemberModel.getByIdMemberClub(clubId, MemberId, callback);
+  }
+
   static updateClubMember(clubMemberId, updatedClubMember, callback) {
     ClubMemberModel.updateClubMember(clubMemberId, updatedClubMember, callback);
   }

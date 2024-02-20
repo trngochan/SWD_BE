@@ -31,8 +31,37 @@ ClubMember.getAllClubMembers = function (callback) {
 ClubMember.getClubMemberById = function (clubMemberId, callback) {
   try {
     db.query(
-      "SELECT * FROM ClubMember WHERE id = ?",
+      "SELECT * FROM ClubMember WHERE id = ? and status = 1",
       clubMemberId,
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({
+            status: "error",
+            message: "Error getting clubMember by ID",
+          });
+        } else {
+          if (result.length > 0) {
+            // Nếu có dữ liệu trả về
+            callback({ status: "success", result: result[0] });
+          } else {
+            // Nếu không có dữ liệu
+            callback({ status: "error", message: "ClubMember not found" });
+          }
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    callback({ status: "error", message: "Error getting clubMember by ID" });
+  }
+};
+
+ClubMember.getByIdMemberClub = function (clubId, MemberId, callback) {
+  try {
+    db.query(
+      "SELECT * FROM ClubMember WHERE clubId = ? and memberId = ? and status = 1 ORDER BY dateTime DESC  limit 1",
+      [clubId, MemberId],
       function (err, result) {
         if (err) {
           console.error(err);

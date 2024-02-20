@@ -85,6 +85,8 @@ Slot.createSlot = function (newSlot, callback) {
   try {
     db.query("INSERT INTO Slot SET ?", newSlot, function (err, result) {
       if (err) {
+        console.log(err);
+
         callback({ status: "error", message: "Error creating slot" });
       } else {
         callback({
