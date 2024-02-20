@@ -81,8 +81,6 @@ Slot.getByIdClub = function (clubId, callback) {
 };
 
 Slot.createSlot = function (newSlot, callback) {
-  newSlot.status = 1;
-  newSlot.dateTime = new Date();
   console.log(newSlot);
   try {
     db.query("INSERT INTO Slot SET ?", newSlot, function (err, result) {
