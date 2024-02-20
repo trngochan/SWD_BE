@@ -2,7 +2,7 @@
 const TranpointService = require("../services/tranpoint.service");
 
 exports.get_list = function (req, res) {
-    TranpointService.getAllTranpoints(function (result) {
+  TranpointService.getAllTranpoints(function (result) {
     if (result.status === "success") {
       res.status(200).json(result);
     } else if (result.status === "error") {
@@ -36,13 +36,17 @@ exports.get_tranpoint = function (req, res) {
 exports.update_tranpoint = function (req, res) {
   const tranpointId = req.params.id;
   const updatedTranpoint = req.body;
-  TranpointService.updateTranpoint(tranpointId, updatedTranpoint, function (result) {
-    if (result.status === "success") {
-      res.status(200).json({ message: result.message });
-    } else if (result.status === "error") {
-      res.status(404).json({ message: result.message });
+  TranpointService.updateTranpoint(
+    tranpointId,
+    updatedTranpoint,
+    function (result) {
+      if (result.status === "success") {
+        res.status(200).json({ message: result.message });
+      } else if (result.status === "error") {
+        res.status(404).json({ message: result.message });
+      }
     }
-  });
+  );
 };
 
 exports.delete_tranpoint = function (req, res) {

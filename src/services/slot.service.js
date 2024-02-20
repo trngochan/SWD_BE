@@ -21,6 +21,10 @@ class SlotService {
   static deleteSlot(slotId, callback) {
     SlotModel.deleteSlot(slotId, callback);
   }
+
+  static getByIdClub(clubId, callback) {
+    SlotModel.getByIdClub(clubId, callback);
+  }
 }
 
 module.exports = SlotService;

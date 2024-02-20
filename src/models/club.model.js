@@ -31,24 +31,20 @@ Club.getAllClubs = function (callback) {
 
 Club.getClubById = function (clubId, callback) {
   try {
-    db.query(
-      "SELECT * FROM Club WHERE id = ?",
-      clubId,
-      function (err, result) {
-        if (err) {
-          console.error(err);
-          callback({ status: "error", message: "Error getting club by ID" });
+    db.query("SELECT * FROM Club WHERE id = ?", clubId, function (err, result) {
+      if (err) {
+        console.error(err);
+        callback({ status: "error", message: "Error getting club by ID" });
+      } else {
+        if (result.length > 0) {
+          // Nếu có dữ liệu trả về
+          callback({ status: "success", result: result[0] });
         } else {
-          if (result.length > 0) {
-            // Nếu có dữ liệu trả về
-            callback({ status: "success", result: result[0] });
-          } else {
-            // Nếu không có dữ liệu
-            callback({ status: "error", message: "Club not found" });
-          }
+          // Nếu không có dữ liệu
+          callback({ status: "error", message: "Club not found" });
         }
       }
-    );
+    });
   } catch (error) {
     console.error(error);
     callback({ status: "error", message: "Error getting club by ID" });
@@ -56,8 +52,8 @@ Club.getClubById = function (clubId, callback) {
 };
 
 Club.createClub = function (newClub, callback) {
-  newClub.status=1;
-  newClub.dateTime= new Date();
+  newClub.status = 1;
+  newClub.dateTime = new Date();
   console.log(newClub);
   try {
     db.query("INSERT INTO Club SET ?", newClub, function (err, result) {
@@ -147,6 +143,65 @@ Club.getClubByEmail = function (email, callback) {
   } catch (error) {
     console.error(error);
     callback({ status: "error", message: "Error getting club by email" });
+  }
+};
+
+Club.addMember = function (idClub, callback) {
+  try {
+    db.query(
+      "UPDATE Club SET countMember = countMember + 1 WHERE id = ?",
+      idClub,
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({
+            status: "error",
+            message: "Error updating countMember",
+          });
+        } else {
+          // Kiểm tra xem có dòng nào bị ảnh hưởng bởi truy vấn UPDATE hay không
+          if (result.affectedRows > 0) {
+            callback({ status: "success" });
+          } else {
+            callback({ status: "error", message: "Club not found" });
+          }
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    callback({ status: "error", message: "Error updating countMember" });
+  }
+};
+
+Club.removeMember = function (idClub, callback) {
+  try {
+    db.query(
+      "UPDATE Club SET countMember = countMember - 1 WHERE id = ? AND countMember > 0",
+      idClub,
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({
+            status: "error",
+            message: "Error updating countMember",
+          });
+        } else {
+          // Kiểm tra xem có dòng nào bị ảnh hưởng bởi truy vấn UPDATE hay không
+          if (result.affectedRows > 0) {
+            callback({ status: "success" });
+          } else {
+            callback({
+              status: "error",
+              message: "Club not found or countMember already at 0",
+            });
+          }
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    callback({ status: "error", message: "Error updating countMember" });
   }
 };
 

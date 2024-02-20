@@ -11,17 +11,20 @@ const ClubMemSlot = function (clubMemSlot) {
 
 ClubMemSlot.getAllClubMemSlots = function (callback) {
   try {
-    db.query("SELECT * FROM ClubMemSlot", function (err, result) {
-      if (err) {
-        console.error(err);
-        callback({ status: "error", message: "ClubMemSlot get all fail" });
-      } else {
-        callback({
-          status: "success",
-          result: result,
-        });
+    db.query(
+      "SELECT * FROM ClubMemSlot and status = 1",
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({ status: "error", message: "ClubMemSlot get all fail" });
+        } else {
+          callback({
+            status: "success",
+            result: result,
+          });
+        }
       }
-    });
+    );
   } catch (error) {
     callback({ status: "error", message: "ClubMemSlot get all fail" });
   }
@@ -30,12 +33,15 @@ ClubMemSlot.getAllClubMemSlots = function (callback) {
 ClubMemSlot.getClubMemSlotById = function (clubMemSlotId, callback) {
   try {
     db.query(
-      "SELECT * FROM ClubMemSlot WHERE id = ?",
+      "SELECT * FROM ClubMemSlot WHERE id = ? and status = 1",
       clubMemSlotId,
       function (err, result) {
         if (err) {
           console.error(err);
-          callback({ status: "error", message: "Error getting clubMemSlot by ID" });
+          callback({
+            status: "error",
+            message: "Error getting clubMemSlot by ID",
+          });
         } else {
           if (result.length > 0) {
             // Nếu có dữ liệu trả về
@@ -54,28 +60,36 @@ ClubMemSlot.getClubMemSlotById = function (clubMemSlotId, callback) {
 };
 
 ClubMemSlot.createClubMemSlot = function (newClubMemSlot, callback) {
-  newClubMemSlot.status=1;
-  newClubMemSlot.dateTime= new Date();
+  newClubMemSlot.status = 1;
+  newClubMemSlot.dateTime = new Date();
   try {
-    db.query("INSERT INTO ClubMemSlot SET ?", newClubMemSlot, function (err, result) {
-      if (err) {
-        callback({ status: "error", message: "Error creating clubMemSlot" });
-      } else {
-        callback({
-          status: "success",
-          message: "Created clubMemSlot successfully",
-        });
+    db.query(
+      "INSERT INTO ClubMemSlot SET ?",
+      newClubMemSlot,
+      function (err, result) {
+        if (err) {
+          callback({ status: "error", message: "Error creating clubMemSlot" });
+        } else {
+          callback({
+            status: "success",
+            message: "Created clubMemSlot successfully",
+          });
+        }
       }
-    });
+    );
   } catch (error) {
     callback({ status: "error", message: "Error creating clubMemSlot" });
   }
 };
 
-ClubMemSlot.updateClubMemSlot = function (clubMemSlotId, updatedClubMemSlot, callback) {
+ClubMemSlot.updateClubMemSlot = function (
+  clubMemSlotId,
+  updatedClubMemSlot,
+  callback
+) {
   try {
     db.query(
-      "UPDATE ClubMemSlot SET ? WHERE id = ?",
+      "UPDATE ClubMemSlot SET ? WHERE id = ? and status = 1",
       [updatedClubMemSlot, clubMemSlotId],
       function (err, result) {
         if (err) {
@@ -100,7 +114,7 @@ ClubMemSlot.updateClubMemSlot = function (clubMemSlotId, updatedClubMemSlot, cal
 ClubMemSlot.deleteClubMemSlot = function (clubMemSlotId, callback) {
   try {
     db.query(
-      "UPDATE ClubMemSlot SET status = 0 WHERE id = ?",
+      "UPDATE ClubMemSlot SET status = 0 WHERE id = ? and status = 1",
       [clubMemSlotId],
       function (err, result) {
         if (result.affectedRows > 0) {
@@ -121,7 +135,7 @@ ClubMemSlot.deleteClubMemSlot = function (clubMemSlotId, callback) {
 ClubMemSlot.getClubMemSlotByEmail = function (email, callback) {
   try {
     db.query(
-      "SELECT * FROM ClubMemSlot WHERE email = ?",
+      "SELECT * FROM ClubMemSlot WHERE email = ? and status = 1",
       email,
       function (err, result) {
         if (err) {
@@ -143,7 +157,10 @@ ClubMemSlot.getClubMemSlotByEmail = function (email, callback) {
     );
   } catch (error) {
     console.error(error);
-    callback({ status: "error", message: "Error getting clubMemSlot by email" });
+    callback({
+      status: "error",
+      message: "Error getting clubMemSlot by email",
+    });
   }
 };
 

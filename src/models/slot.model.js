@@ -34,9 +34,31 @@ Slot.getAllSlots = function (callback) {
 
 Slot.getSlotById = function (slotId, callback) {
   try {
+    db.query("SELECT * FROM Slot WHERE id = ?", slotId, function (err, result) {
+      if (err) {
+        console.error(err);
+        callback({ status: "error", message: "Error getting slot by ID" });
+      } else {
+        if (result.length > 0) {
+          // Nếu có dữ liệu trả về
+          callback({ status: "success", result: result[0] });
+        } else {
+          // Nếu không có dữ liệu
+          callback({ status: "error", message: "Slot not found" });
+        }
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    callback({ status: "error", message: "Error getting slot by ID" });
+  }
+};
+
+Slot.getByIdClub = function (clubId, callback) {
+  try {
     db.query(
-      "SELECT * FROM Slot WHERE id = ?",
-      slotId,
+      "SELECT * FROM Slot WHERE clubId = ?",
+      clubId,
       function (err, result) {
         if (err) {
           console.error(err);
@@ -44,7 +66,7 @@ Slot.getSlotById = function (slotId, callback) {
         } else {
           if (result.length > 0) {
             // Nếu có dữ liệu trả về
-            callback({ status: "success", result: result[0] });
+            callback({ status: "success", result: result });
           } else {
             // Nếu không có dữ liệu
             callback({ status: "error", message: "Slot not found" });
@@ -59,8 +81,8 @@ Slot.getSlotById = function (slotId, callback) {
 };
 
 Slot.createSlot = function (newSlot, callback) {
-  newSlot.status=1;
-  newSlot.dateTime= new Date();
+  newSlot.status = 1;
+  newSlot.dateTime = new Date();
   console.log(newSlot);
   try {
     db.query("INSERT INTO Slot SET ?", newSlot, function (err, result) {

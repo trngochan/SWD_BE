@@ -21,6 +21,14 @@ class ClubService {
   static deleteClub(clubId, callback) {
     ClubModel.deleteClub(clubId, callback);
   }
+
+  static addMember(clubId, callback) {
+    ClubModel.deleteClub(clubId, callback);
+  }
+
+  static removeMember(clubId, callback) {
+    ClubModel.deleteClub(clubId, callback);
+  }
 }
 
 module.exports = ClubService;

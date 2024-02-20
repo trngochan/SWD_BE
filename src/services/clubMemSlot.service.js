@@ -15,11 +15,19 @@ class ClubMemSlotService {
   }
 
   static updateClubMemSlot(clubMemSlotId, updatedClubMemSlot, callback) {
-    ClubMemSlotModel.updateClubMemSlot(clubMemSlotId, updatedClubMemSlot, callback);
+    ClubMemSlotModel.updateClubMemSlot(
+      clubMemSlotId,
+      updatedClubMemSlot,
+      callback
+    );
   }
 
   static deleteClubMemSlot(clubMemSlotId, callback) {
     ClubMemSlotModel.deleteClubMemSlot(clubMemSlotId, callback);
+  }
+
+  static getNumberOfSlot(idSlot, callback) {
+    ClubMemSlotModel.getNumberOfSlot(idSlot, callback);
   }
 }
 

@@ -33,6 +33,17 @@ exports.get_slot = function (req, res) {
   });
 };
 
+exports.getByIdClub = function (req, res) {
+  const clubId = req.params.id;
+  SlotService.getByIdClub(clubId, function (result) {
+    if (result.status === "success") {
+      res.status(200).json({ result: result.result });
+    } else if (result.status === "error") {
+      res.status(404).json({ message: result.message });
+    }
+  });
+};
+
 exports.update_slot = function (req, res) {
   const slotId = req.params.id;
   const updatedSlot = req.body;

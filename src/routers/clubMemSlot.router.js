@@ -17,4 +17,10 @@ router.put("/clubMemSlots/:id", ClubMemSlotController.update_clubMemSlot);
 // Xóa một clubMemSlots
 router.delete("/clubMemSlots/:id", ClubMemSlotController.delete_clubMemSlot);
 
+// get number of slot
+router.get(
+  "/clubMemSlots/getNumberOfSlot/:idSlot",
+  ClubMemSlotController.getNumberOfSlot
+);
+
 module.exports = router;

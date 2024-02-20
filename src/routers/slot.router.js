@@ -8,6 +8,9 @@ router.get("/slots", SlotController.get_list);
 // Tạo mới slots
 router.post("/slots", SlotController.create);
 
+// get slots by id club
+router.get("/slots/:id/id_club", SlotController.getByIdClub);
+
 // Lấy thông tin của một slots cụ thể
 router.get("/slots/:id", SlotController.get_slot);
 

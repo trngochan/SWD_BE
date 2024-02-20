@@ -33,16 +33,31 @@ exports.get_clubMemSlot = function (req, res) {
   });
 };
 
-exports.update_clubMemSlot = function (req, res) {
-  const clubMemSlotId = req.params.id;
-  const updatedClubMemSlot = req.body;
-  ClubMemSlotService.updateClubMemSlot(clubMemSlotId, updatedClubMemSlot, function (result) {
+exports.getNumberOfSlot = function (req, res) {
+  const clubMemSlotId = req.params.idSlot;
+  ClubMemSlotService.getNumberOfSlot(idSlot, function (result) {
     if (result.status === "success") {
-      res.status(200).json({ message: result.message });
+      res.status(200).json({ result: result.result });
     } else if (result.status === "error") {
       res.status(404).json({ message: result.message });
     }
   });
+};
+
+exports.update_clubMemSlot = function (req, res) {
+  const clubMemSlotId = req.params.id;
+  const updatedClubMemSlot = req.body;
+  ClubMemSlotService.updateClubMemSlot(
+    clubMemSlotId,
+    updatedClubMemSlot,
+    function (result) {
+      if (result.status === "success") {
+        res.status(200).json({ message: result.message });
+      } else if (result.status === "error") {
+        res.status(404).json({ message: result.message });
+      }
+    }
+  );
 };
 
 exports.delete_clubMemSlot = function (req, res) {
