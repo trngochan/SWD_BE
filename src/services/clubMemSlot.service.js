@@ -14,6 +14,10 @@ class ClubMemSlotService {
     ClubMemSlotModel.getClubMemSlotById(clubMemSlotId, callback);
   }
 
+  static geSlotJoinedByClubMember(clubMem, callback) {
+    ClubMemSlotModel.geSlotJoinedByClubMember(clubMem, callback);
+  }
+
   static updateClubMemSlot(clubMemSlotId, updatedClubMemSlot, callback) {
     ClubMemSlotModel.updateClubMemSlot(
       clubMemSlotId,

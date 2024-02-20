@@ -10,6 +10,10 @@ class TranpointService {
     TranpointModel.createTranpoint(newTranpoint, callback);
   }
 
+  static get_tranpoint_new(newTranpoint, callback) {
+    TranpointModel.get_tranpoint_new(newTranpoint, callback);
+  }
+
   static getTranpointById(tranpointId, callback) {
     TranpointModel.getTranpointById(tranpointId, callback);
   }

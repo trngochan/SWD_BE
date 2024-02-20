@@ -59,6 +59,30 @@ ClubMemSlot.getClubMemSlotById = function (clubMemSlotId, callback) {
   }
 };
 
+ClubMemSlot.geSlotJoinedByClubMember = function (clubMem, callback) {
+  try {
+    db.query(
+      "SELECT * FROM ClubMemSlot WHERE clubMemberId = ? and status = 1",
+      clubMem,
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({
+            status: "error",
+            message: "Error getting clubMemSlot by ID",
+          });
+        } else {
+          // Nếu có dữ liệu trả về
+          callback({ status: "success", result: result });
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    callback({ status: "error", message: "Error getting clubMemSlot by ID" });
+  }
+};
+
 ClubMemSlot.getNumberOfSlot = function (slotId, callback) {
   try {
     db.query(

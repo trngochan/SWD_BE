@@ -23,4 +23,10 @@ router.get(
   ClubMemSlotController.getNumberOfSlot
 );
 
+// get slot joined by clubmember
+router.get(
+  "/clubMemSlots/:clubmember/getSlotJoined",
+  ClubMemSlotController.geSlotJoinedByClubMember
+);
+
 module.exports = router;

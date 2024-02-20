@@ -33,6 +33,16 @@ exports.get_tranpoint = function (req, res) {
   });
 };
 
+exports.get_tranpoint_new = function (req, res) {
+  TranpointService.get_tranpoint_new(function (result) {
+    if (result.status === "success") {
+      res.status(200).json({ result: result.result });
+    } else if (result.status === "error") {
+      res.status(404).json({ message: result.message });
+    }
+  });
+};
+
 exports.update_tranpoint = function (req, res) {
   const tranpointId = req.params.id;
   const updatedTranpoint = req.body;

@@ -11,6 +11,8 @@ router.post("/slots", SlotController.create);
 // get slots by id club
 router.get("/slots/:id/id_club", SlotController.getByIdClub);
 
+// get slots joineed
+
 // Lấy thông tin của một slots cụ thể
 router.get("/slots/:id", SlotController.get_slot);
 

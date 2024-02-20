@@ -8,6 +8,9 @@ router.get("/tranpoints", TranpointController.get_list);
 // Tạo mới tranpoint
 router.post("/tranpoints", TranpointController.create);
 
+// get tranpint moi nhat
+router.get("/tranpoints/new", TranpointController.get_tranpoint_new);
+
 // Lấy thông tin của một tranpoint cụ thể
 router.get("/tranpoints/:id", TranpointController.get_tranpoint);
 

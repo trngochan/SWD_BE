@@ -28,12 +28,15 @@ Tranpoint.getAllTranpoints = function (callback) {
 Tranpoint.getTranpointById = function (tranpointId, callback) {
   try {
     db.query(
-      "SELECT * FROM Tranpoint WHERE id = ?",
+      "SELECT * FROM Tranpoint WHERE id = ? and status = 1",
       tranpointId,
       function (err, result) {
         if (err) {
           console.error(err);
-          callback({ status: "error", message: "Error getting tranpoint by ID" });
+          callback({
+            status: "error",
+            message: "Error getting tranpoint by ID",
+          });
         } else {
           if (result.length > 0) {
             // Nếu có dữ liệu trả về
@@ -51,21 +54,59 @@ Tranpoint.getTranpointById = function (tranpointId, callback) {
   }
 };
 
+Tranpoint.get_tranpoint_new = function (callback) {
+  try {
+    db.query(
+      "SELECT * FROM TranPoint WHERE status = 1 ORDER BY dateTime DESC LIMIT 1",
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({
+            status: "error",
+            message: "Error getting latest tranpoint with status 1",
+          });
+        } else {
+          if (result.length > 0) {
+            // Nếu có dữ liệu trả về
+            callback({ status: "success", result: result[0] });
+          } else {
+            // Nếu không có dữ liệu
+            callback({
+              status: "error",
+              message: "No tranpoint found with status 1",
+            });
+          }
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    callback({
+      status: "error",
+      message: "Error getting latest tranpoint with status 1",
+    });
+  }
+};
+
 Tranpoint.createTranpoint = function (newTranpoint, callback) {
-  newTranpoint.status=1;
-  newTranpoint.dateTime= new Date();
+  newTranpoint.status = 1;
+  newTranpoint.dateTime = new Date();
   console.log(newTranpoint);
   try {
-    db.query("INSERT INTO Tranpoint SET ?", newTranpoint, function (err, result) {
-      if (err) {
-        callback({ status: "error", message: "Error creating tranpoint" });
-      } else {
-        callback({
-          status: "success",
-          message: "Created tranpoint successfully",
-        });
+    db.query(
+      "INSERT INTO Tranpoint SET ?",
+      newTranpoint,
+      function (err, result) {
+        if (err) {
+          callback({ status: "error", message: "Error creating tranpoint" });
+        } else {
+          callback({
+            status: "success",
+            message: "Created tranpoint successfully",
+          });
+        }
       }
-    });
+    );
   } catch (error) {
     callback({ status: "error", message: "Error creating tranpoint" });
   }
