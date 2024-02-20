@@ -40,6 +40,8 @@ exports.login_admin = function (username, password, callback) {
     if (result.status === "success") {
       const member = result.result;
 
+      console.log(member);
+
       // Kiểm tra mật khẩu
       if (member.password === password) {
         // Tạo token
