@@ -21,9 +21,53 @@ exports.create = function (req, res) {
   });
 };
 
+exports.addPoint = function (req, res) {
+  const data = req.body;
+  WalletService.addPoint(data, function (result) {
+    if (result.status === "success") {
+      res.status(200).json({ message: result.message });
+    } else if (result.status === "error") {
+      res.status(404).json({ message: result.message });
+    }
+  });
+};
+
+exports.decreaPoint = function (req, res) {
+  const data = req.body;
+  WalletService.decreaPoint(data, function (result) {
+    if (result.status === "success") {
+      res.status(200).json({ message: result.message });
+    } else if (result.status === "error") {
+      res.status(404).json({ message: result.message });
+    }
+  });
+};
+
+exports.addPoint = function (req, res) {
+  const data = req.body;
+  WalletService.addPoint(newWallet, function (result) {
+    if (result.status === "success") {
+      res.status(200).json({ message: result.message });
+    } else if (result.status === "error") {
+      res.status(404).json({ message: result.message });
+    }
+  });
+};
+
 exports.get_wallet = function (req, res) {
   const walletId = req.params.id;
   WalletService.getWalletById(walletId, function (result) {
+    if (result.status === "success") {
+      res.status(200).json({ result: result.result });
+    } else if (result.status === "error") {
+      res.status(404).json({ message: result.message });
+    }
+  });
+};
+
+exports.getByMemberid = function (req, res) {
+  const memberId = req.params.id;
+  WalletService.getByMemberid(memberId, function (result) {
     if (result.status === "success") {
       res.status(200).json({ result: result.result });
     } else if (result.status === "error") {

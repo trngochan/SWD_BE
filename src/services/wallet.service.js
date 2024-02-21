@@ -12,6 +12,18 @@ exports.getWalletById = function (walletId, callback) {
   Wallet.getWalletById(walletId, callback);
 };
 
+exports.addPoint = function (data, callback) {
+  Wallet.addPoint(data, callback);
+};
+
+exports.decreaPoint = function (data, callback) {
+  Wallet.decreaPoint(data, callback);
+};
+
+exports.getByMemberid = function (memberId, callback) {
+  Wallet.getByMemberid(memberId, callback);
+};
+
 exports.updateWallet = function (walletId, updatedWallet, callback) {
   Wallet.updateWallet(walletId, updatedWallet, callback);
 };

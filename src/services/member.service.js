@@ -1,5 +1,6 @@
 // member.service.js
 const MemberModel = require("../models/member.model");
+const WalletModel = require("../models/wallet.model");
 
 class MemberService {
   static getAllMembers(callback) {
@@ -20,6 +21,15 @@ class MemberService {
           });
         } else {
           MemberModel.createMember(newMember, function (createMemberResult) {
+            if (createMemberResult.status === "success") {
+              WalletModel.createWallet(
+                {
+                  memberId: newMember.id,
+                  memberName: newMember.name,
+                },
+                (data) => {}
+              );
+            }
             callback(createMemberResult);
           });
         }

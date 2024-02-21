@@ -119,8 +119,6 @@ ClubMemSlot.getNumberOfSlot = function (slotId, callback) {
 };
 
 ClubMemSlot.createClubMemSlot = function (newClubMemSlot, callback) {
-  newClubMemSlot.status = 1;
-  newClubMemSlot.dateTime = new Date();
   try {
     db.query(
       "INSERT INTO ClubMemSlot SET ?",
@@ -129,9 +127,11 @@ ClubMemSlot.createClubMemSlot = function (newClubMemSlot, callback) {
         if (err) {
           callback({ status: "error", message: "Error creating clubMemSlot" });
         } else {
+          const insertedId = result.insertId;
           callback({
             status: "success",
             message: "Created clubMemSlot successfully",
+            result: insertedId,
           });
         }
       }

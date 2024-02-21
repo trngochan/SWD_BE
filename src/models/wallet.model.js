@@ -54,9 +54,33 @@ Wallet.getWalletById = function (walletId, callback) {
   }
 };
 
+Wallet.getByMemberid = function (memberId, callback) {
+  try {
+    db.query(
+      "SELECT * FROM Wallet WHERE memberId = ? and status = 1",
+      memberId,
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({ status: "error", message: "Error getting wallet by ID" });
+        } else {
+          if (result.length > 0) {
+            // Nếu có dữ liệu trả về
+            callback({ status: "success", result: result[0] });
+          } else {
+            // Nếu không có dữ liệu
+            callback({ status: "error", message: "Wallet not found" });
+          }
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    callback({ status: "error", message: "Error getting wallet by ID" });
+  }
+};
+
 Wallet.createWallet = function (newWallet, callback) {
-  newWallet.status=1;
-  newWallet.dateTime= new Date();
   try {
     db.query("INSERT INTO Wallet SET ?", newWallet, function (err, result) {
       if (err) {
@@ -73,6 +97,60 @@ Wallet.createWallet = function (newWallet, callback) {
   }
 };
 
+Wallet.addPoint = function (data, callback) {
+  const idWallet = data.walletId;
+  const tranPoint = data.point;
+
+  try {
+    // Sử dụng câu truy vấn SQL UPDATE để cập nhật thuộc tính point
+    db.query(
+      "UPDATE Wallet SET point = point + ? WHERE id = ?",
+      [tranPoint, idWallet],
+      function (err, result) {
+        if (err) {
+          callback({ status: "error", message: "Error updating wallet" });
+        } else {
+          callback({
+            status: "success",
+            message: "Updated wallet successfully",
+          });
+        }
+      }
+    );
+  } catch (error) {
+    callback({ status: "error", message: "Error updating wallet" });
+  }
+};
+
+Wallet.decreaPoint = function (data, callback) {
+  const idWallet = data.walletId;
+  const tranPoint = data.point;
+
+  console.log({
+    walletId: idWallet,
+    point: tranPoint,
+  });
+
+  try {
+    // Sử dụng câu truy vấn SQL UPDATE để cập nhật thuộc tính point
+    db.query(
+      "UPDATE Wallet SET point = point - ? WHERE id = ?",
+      [tranPoint, idWallet],
+      function (err, result) {
+        if (err) {
+          callback({ status: "error", message: "Error updating wallet" });
+        } else {
+          callback({
+            status: "success",
+            message: "Updated wallet successfully",
+          });
+        }
+      }
+    );
+  } catch (error) {
+    callback({ status: "error", message: "Error updating wallet" });
+  }
+};
 Wallet.updateWallet = function (walletId, updatedWallet, callback) {
   try {
     db.query(

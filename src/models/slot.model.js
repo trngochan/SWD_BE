@@ -82,20 +82,15 @@ Slot.getByIdClubMember = function (clubMemberId, callback) {
 Slot.getByIdClub = function (clubId, callback) {
   try {
     db.query(
-      "SELECT * FROM Slot WHERE clubId = ?",
+      "SELECT * FROM Slot WHERE clubId = ? and status = 1",
       clubId,
       function (err, result) {
         if (err) {
           console.error(err);
           callback({ status: "error", message: "Error getting slot by ID" });
         } else {
-          if (result.length > 0) {
-            // Nếu có dữ liệu trả về
-            callback({ status: "success", result: result });
-          } else {
-            // Nếu không có dữ liệu
-            callback({ status: "error", message: "Slot not found" });
-          }
+          // Nếu có dữ liệu trả về
+          callback({ status: "success", result: result });
         }
       }
     );

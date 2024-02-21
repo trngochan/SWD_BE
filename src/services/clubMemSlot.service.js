@@ -1,13 +1,35 @@
 // clubMemSlot.service.js
 const ClubMemSlotModel = require("../models/clubMemSlot.model");
+const TransactionHistoryPoint = require("../models/transactionHistoryPoint.model");
+const Wallet = require("../models/wallet.model");
 
 class ClubMemSlotService {
   static getAllClubMemSlots(callback) {
     ClubMemSlotModel.getAllClubMemSlots(callback);
   }
 
-  static createClubMemSlot(newClubMemSlot, callback) {
-    ClubMemSlotModel.createClubMemSlot(newClubMemSlot, callback);
+  static createClubMemSlot(newClubMemSlot, inforWallet, tranPoint, callback) {
+    ClubMemSlotModel.createClubMemSlot(newClubMemSlot, function (result) {
+      const idWallet = inforWallet.id;
+      if (result.status === "success") {
+        TransactionHistoryPoint.createTransactionHistoryPointWhenJoinSlot(
+          inforWallet,
+          newClubMemSlot,
+          -parseInt(tranPoint.point),
+          result.result,
+          () => {
+            Wallet.decreaPoint(
+              {
+                walletId: idWallet,
+                point: tranPoint.point,
+              },
+              () => {}
+            );
+          }
+        );
+      }
+      callback(result);
+    });
   }
 
   static getClubMemSlotById(clubMemSlotId, callback) {

@@ -12,14 +12,22 @@ exports.get_list = function (req, res) {
 };
 
 exports.create = function (req, res) {
-  const newClubMemSlot = req.body;
-  ClubMemSlotService.createClubMemSlot(newClubMemSlot, function (result) {
-    if (result.status === "success") {
-      res.status(200).json({ message: result.message });
-    } else if (result.status === "error") {
-      res.status(404).json({ message: result.message });
+  const newClubMemSlot = req.body.newClubMemSlot;
+  const inforWallet = req.body.inforWallet;
+  const tranPoint = req.body.tranPoint;
+  console.log(req.body);
+  ClubMemSlotService.createClubMemSlot(
+    newClubMemSlot,
+    inforWallet,
+    tranPoint,
+    function (result) {
+      if (result.status === "success") {
+        res.status(200).json({ message: result.message });
+      } else if (result.status === "error") {
+        res.status(404).json({ message: result.message });
+      }
     }
-  });
+  );
 };
 
 exports.get_clubMemSlot = function (req, res) {
