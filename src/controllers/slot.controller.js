@@ -44,6 +44,17 @@ exports.getByIdClub = function (req, res) {
   });
 };
 
+exports.getByIdClubMember = function (req, res) {
+  const clubMemberId = req.params.idclubmember;
+  SlotService.getByIdClubMember(clubMemberId, function (result) {
+    if (result.status === "success") {
+      res.status(200).json({ result: result.result });
+    } else if (result.status === "error") {
+      res.status(404).json({ message: result.message });
+    }
+  });
+};
+
 exports.getJoinedByMember = function (req, res) {
   const clubMember = req.params.clubMember;
   SlotService.getJoinedByMember(clubMember, function (result) {

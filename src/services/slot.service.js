@@ -14,6 +14,10 @@ class SlotService {
     SlotModel.getSlotById(slotId, callback);
   }
 
+  static getByIdClubMember(clubMemberId, callback) {
+    SlotModel.getByIdClubMember(clubMemberId, callback);
+  }
+
   static updateSlot(slotId, updatedSlot, callback) {
     SlotModel.updateSlot(slotId, updatedSlot, callback);
   }

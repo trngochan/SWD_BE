@@ -9,9 +9,13 @@ router.get("/slots", SlotController.get_list);
 router.post("/slots", SlotController.create);
 
 // get slots by id club
-router.get("/slots/:id/id_club", SlotController.getByIdClub);
+router.get(
+  "/slots/:idclubmember/id_clubmember",
+  SlotController.getByIdClubMember
+);
 
-// get slots joineed
+// get slots by id club
+router.get("/slots/:id/id_club", SlotController.getByIdClub);
 
 // Lấy thông tin của một slots cụ thể
 router.get("/slots/:id", SlotController.get_slot);
