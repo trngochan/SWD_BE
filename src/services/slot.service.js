@@ -1,13 +1,31 @@
 // slot.service.js
 const SlotModel = require("../models/slot.model");
+const ClubMemSlot = require("../models/clubMemSlot.model");
+const { response } = require("express");
 
 class SlotService {
   static getAllSlots(callback) {
     SlotModel.getAllSlots(callback);
   }
 
-  static getSlotJoined(callback) {
-    SlotModel.getSlotJoined(callback);
+  static getSlotJoined(idclummem, callback) {
+    ClubMemSlot.getSlotJoinedIDByClubMember(idclummem, (response) => {
+      if (response.status === "success") {
+        SlotModel.getSlotJoined(response.result, callback);
+      } else {
+        callback(response);
+      }
+    });
+  }
+
+  static getSlotNotJoin(idclummem, callback) {
+    ClubMemSlot.getSlotJoinedIDByClubMember(idclummem, (response) => {
+      if (response.status === "success") {
+        SlotModel.getSlotNotJoin(response.result, callback);
+      } else {
+        callback(response);
+      }
+    });
   }
 
   static createSlot(newSlot, callback) {

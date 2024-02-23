@@ -21,10 +21,11 @@ class MemberService {
           });
         } else {
           MemberModel.createMember(newMember, function (createMemberResult) {
+            console.log(createMemberResult);
             if (createMemberResult.status === "success") {
               WalletModel.createWallet(
                 {
-                  memberId: newMember.id,
+                  memberId: createMemberResult.user.id,
                   memberName: newMember.name,
                 },
                 (respone) => {

@@ -58,31 +58,47 @@ Slot.getSlotById = function (slotId, callback) {
   }
 };
 
-Slot.getSlotJoined = function (slotId, callback) {
-  // dang lam tiep
-  // try {
-  //   db.query(
-  //     "SELECT * FROM Slot WHERE id = ? and status = 1",
-  //     slotId,
-  //     function (err, result) {
-  //       if (err) {
-  //         console.error(err);
-  //         callback({ status: "error", message: "Error getting slot by ID" });
-  //       } else {
-  //         if (result.length > 0) {
-  //           // Nếu có dữ liệu trả về
-  //           callback({ status: "success", result: result[0] });
-  //         } else {
-  //           // Nếu không có dữ liệu
-  //           callback({ status: "error", message: "Slot not found" });
-  //         }
-  //       }
-  //     }
-  //   );
-  // } catch (error) {
-  //   console.error(error);
-  //   callback({ status: "error", message: "Error getting slot by ID" });
-  // }
+Slot.getSlotJoined = function (slotsId, callback) {
+  try {
+    const slotIds = slotsId.map((row) => row.slotId);
+    db.query(
+      "SELECT * FROM Slot WHERE id IN (?) AND status = 1 ORDER BY id DESC",
+      [slotIds],
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({ status: "error", message: "Error getting slot by ID" });
+        } else {
+          callback({ status: "success", result: result });
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    callback({ status: "error", message: "Error getting slot by ID" });
+  }
+};
+
+Slot.getSlotNotJoin = function (slotsId, callback) {
+  try {
+    const slotIds = slotsId.map((row) => row.slotId);
+    db.query(
+      "SELECT * FROM Slot WHERE id not IN (?) AND status = 1 ORDER BY id DESC",
+      [slotIds],
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({ status: "error", message: "Error getting slot by ID" });
+        } else {
+          // Nếu có dữ liệu trả về
+          callback({ status: "success", result: result });
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    callback({ status: "error", message: "Error getting slot by ID" });
+  }
 };
 
 Slot.getByIdClubMember = function (clubMemberId, callback) {

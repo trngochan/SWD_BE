@@ -31,6 +31,8 @@ exports.login_admin = function (req, res) {
 exports.registerMember = function (req, res) {
   const newMember = req.body;
 
+  console.log(newMember);
+
   // Gọi service để xử lý đăng ký thành viên
   MemberService.createMember(newMember, (result) => {
     res.status(result.status === "success" ? 200 : 400).json(result);
