@@ -17,6 +17,12 @@ router.get(
   ClubMemberController.check_join
 );
 
+//get clubmem join by slot id
+router.get(
+  "/clubMembers/:idslot/getbyslotid",
+  ClubMemberController.getbyslotid
+);
+
 // member roi clb
 router.put("/clubMembers/leaving_club/", ClubMemberController.leaving_club);
 

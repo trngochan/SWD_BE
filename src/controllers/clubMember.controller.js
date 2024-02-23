@@ -33,6 +33,17 @@ exports.get_clubMember = function (req, res) {
   });
 };
 
+exports.getbyslotid = function (req, res) {
+  const idslot = req.params.idslot;
+  ClubMemberService.getbyslotid(idslot, function (result) {
+    if (result.status === "success") {
+      res.status(200).json({ result: result.result });
+    } else if (result.status === "error") {
+      res.status(404).json({ message: result.message });
+    }
+  });
+};
+
 exports.getByIdMemberClub = function (req, res) {
   const clubId = req.params.idClub;
   const MemberId = req.params.idMember;
