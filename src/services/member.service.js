@@ -27,10 +27,16 @@ class MemberService {
                   memberId: newMember.id,
                   memberName: newMember.name,
                 },
-                (data) => {}
+                (respone) => {
+                  if (respone.status === "success") {
+                    console.log(respone);
+                    callback(createMemberResult);
+                  } else {
+                    callback(respone);
+                  }
+                }
               );
             }
-            callback(createMemberResult);
           });
         }
       }

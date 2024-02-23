@@ -2,7 +2,9 @@
 const TransactionHistoryPointService = require("../services/transactionHistoryPoint.service");
 
 exports.get_list = function (req, res) {
-  TransactionHistoryPointService.getAllTransactionHistoryPoints(function (result) {
+  TransactionHistoryPointService.getAllTransactionHistoryPoints(function (
+    result
+  ) {
     if (result.status === "success") {
       res.status(200).json(result);
     } else if (result.status === "error") {
@@ -13,18 +15,35 @@ exports.get_list = function (req, res) {
 
 exports.create = function (req, res) {
   const newTransactionHistoryPoint = req.body;
-  TransactionHistoryPointService.createTransactionHistoryPoint(newTransactionHistoryPoint, function (result) {
-    if (result.status === "success") {
-      res.status(200).json({ message: result.message });
-    } else if (result.status === "error") {
-      res.status(404).json({ message: result.message });
+  TransactionHistoryPointService.createTransactionHistoryPoint(
+    newTransactionHistoryPoint,
+    function (result) {
+      if (result.status === "success") {
+        res.status(200).json({ message: result.message });
+      } else if (result.status === "error") {
+        res.status(404).json({ message: result.message });
+      }
     }
-  });
+  );
 };
 
 exports.get_transactionHistoryPoint = function (req, res) {
   const transactionHistoryPointId = req.params.id;
-  TransactionHistoryPointService.getTransactionHistoryPointById(transactionHistoryPointId, function (result) {
+  TransactionHistoryPointService.getTransactionHistoryPointById(
+    transactionHistoryPointId,
+    function (result) {
+      if (result.status === "success") {
+        res.status(200).json({ result: result.result });
+      } else if (result.status === "error") {
+        res.status(404).json({ message: result.message });
+      }
+    }
+  );
+};
+
+exports.get_by_idWallet = function (req, res) {
+  const idWallet = req.params.idWallet;
+  TransactionHistoryPointService.get_by_idWallet(idWallet, function (result) {
     if (result.status === "success") {
       res.status(200).json({ result: result.result });
     } else if (result.status === "error") {
@@ -36,22 +55,29 @@ exports.get_transactionHistoryPoint = function (req, res) {
 exports.update_transactionHistoryPoint = function (req, res) {
   const transactionHistoryPointId = req.params.id;
   const updatedTransactionHistoryPoint = req.body;
-  TransactionHistoryPointService.updateTransactionHistoryPoint(transactionHistoryPointId, updatedTransactionHistoryPoint, function (result) {
-    if (result.status === "success") {
-      res.status(200).json({ message: result.message });
-    } else if (result.status === "error") {
-      res.status(404).json({ message: result.message });
+  TransactionHistoryPointService.updateTransactionHistoryPoint(
+    transactionHistoryPointId,
+    updatedTransactionHistoryPoint,
+    function (result) {
+      if (result.status === "success") {
+        res.status(200).json({ message: result.message });
+      } else if (result.status === "error") {
+        res.status(404).json({ message: result.message });
+      }
     }
-  });
+  );
 };
 
 exports.delete_transactionHistoryPoint = function (req, res) {
   const transactionHistoryPointId = req.params.id;
-  TransactionHistoryPointService.deleteTransactionHistoryPoint(transactionHistoryPointId, function (result) {
-    if (result.status === "success") {
-      res.status(200).json({ message: result.message });
-    } else if (result.status === "error") {
-      res.status(404).json({ message: result.message });
+  TransactionHistoryPointService.deleteTransactionHistoryPoint(
+    transactionHistoryPointId,
+    function (result) {
+      if (result.status === "success") {
+        res.status(200).json({ message: result.message });
+      } else if (result.status === "error") {
+        res.status(404).json({ message: result.message });
+      }
     }
-  });
+  );
 };

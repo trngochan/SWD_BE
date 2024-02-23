@@ -11,6 +11,18 @@ exports.get_list = function (req, res) {
   });
 };
 
+exports.getSlotJoined = function (req, res) {
+  const idclummem = req.params.idclummem;
+
+  SlotService.getSlotJoined(idclummem, function (result) {
+    if (result.status === "success") {
+      res.status(200).json({ result: result.result });
+    } else if (result.status === "error") {
+      res.status(404).json({ message: result.message });
+    }
+  });
+};
+
 exports.create = function (req, res) {
   const newSlot = req.body;
   SlotService.createSlot(newSlot, function (result) {

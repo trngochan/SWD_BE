@@ -6,6 +6,10 @@ class SlotService {
     SlotModel.getAllSlots(callback);
   }
 
+  static getSlotJoined(callback) {
+    SlotModel.getSlotJoined(callback);
+  }
+
   static createSlot(newSlot, callback) {
     SlotModel.createSlot(newSlot, callback);
   }

@@ -58,6 +58,33 @@ Slot.getSlotById = function (slotId, callback) {
   }
 };
 
+Slot.getSlotJoined = function (slotId, callback) {
+  // dang lam tiep
+  // try {
+  //   db.query(
+  //     "SELECT * FROM Slot WHERE id = ? and status = 1",
+  //     slotId,
+  //     function (err, result) {
+  //       if (err) {
+  //         console.error(err);
+  //         callback({ status: "error", message: "Error getting slot by ID" });
+  //       } else {
+  //         if (result.length > 0) {
+  //           // Nếu có dữ liệu trả về
+  //           callback({ status: "success", result: result[0] });
+  //         } else {
+  //           // Nếu không có dữ liệu
+  //           callback({ status: "error", message: "Slot not found" });
+  //         }
+  //       }
+  //     }
+  //   );
+  // } catch (error) {
+  //   console.error(error);
+  //   callback({ status: "error", message: "Error getting slot by ID" });
+  // }
+};
+
 Slot.getByIdClubMember = function (clubMemberId, callback) {
   try {
     db.query(

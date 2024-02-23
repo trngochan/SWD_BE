@@ -14,8 +14,7 @@ class ClubMemSlotService {
       if (result.status === "success") {
         TransactionHistoryPoint.createTransactionHistoryPointWhenJoinSlot(
           inforWallet,
-          newClubMemSlot,
-          -parseInt(tranPoint.point),
+          tranPoint,
           result.result,
           () => {
             Wallet.decreaPoint(

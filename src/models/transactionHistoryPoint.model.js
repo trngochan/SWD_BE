@@ -13,20 +13,23 @@ const TransactionHistoryPoint = function (transactionHistoryPoint) {
 
 TransactionHistoryPoint.getAllTransactionHistoryPoints = function (callback) {
   try {
-    db.query("SELECT * FROM TransactionHistoryPoint", function (err, result) {
-      if (err) {
-        console.error(err);
-        callback({
-          status: "error",
-          message: "TransactionHistoryPoint get all fail",
-        });
-      } else {
-        callback({
-          status: "success",
-          result: result,
-        });
+    db.query(
+      "SELECT * FROM TransactionHistoryPoint where status = 1",
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({
+            status: "error",
+            message: "TransactionHistoryPoint get all fail",
+          });
+        } else {
+          callback({
+            status: "success",
+            result: result,
+          });
+        }
       }
-    });
+    );
   } catch (error) {
     callback({
       status: "error",
@@ -41,8 +44,43 @@ TransactionHistoryPoint.getTransactionHistoryPointById = function (
 ) {
   try {
     db.query(
-      "SELECT * FROM TransactionHistoryPoint WHERE id = ?",
+      "SELECT * FROM TransactionHistoryPoint WHERE id = ? and status = 1",
       transactionHistoryPointId,
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({
+            status: "error",
+            message: "Error getting transactionHistoryPoint by ID",
+          });
+        } else {
+          if (result.length > 0) {
+            // Nếu có dữ liệu trả về
+            callback({ status: "success", result: result[0] });
+          } else {
+            // Nếu không có dữ liệu
+            callback({
+              status: "error",
+              message: "TransactionHistoryPoint not found",
+            });
+          }
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    callback({
+      status: "error",
+      message: "Error getting transactionHistoryPoint by ID",
+    });
+  }
+};
+
+TransactionHistoryPoint.get_by_idWallet = function (idWallet, callback) {
+  try {
+    db.query(
+      "SELECT * FROM TransactionHistoryPoint WHERE walletId = ? and status = 1",
+      idWallet,
       function (err, result) {
         if (err) {
           console.error(err);
@@ -106,7 +144,6 @@ TransactionHistoryPoint.createTransactionHistoryPoint = function (
 
 TransactionHistoryPoint.createTransactionHistoryPointWhenJoinSlot = function (
   inforWallet,
-  newClubMemSlot,
   tranPoint,
   clubMemSlotId,
   callback
@@ -117,7 +154,7 @@ TransactionHistoryPoint.createTransactionHistoryPointWhenJoinSlot = function (
       clubMemSlotId: clubMemSlotId,
       initialPoint: inforWallet.point,
       transactionPointId: tranPoint.id,
-      transactionPoint: tranPoint.point,
+      transactionPoint: parseInt(-tranPoint.point),
     };
     db.query(
       "INSERT INTO TransactionHistoryPoint SET ?",
@@ -185,7 +222,7 @@ TransactionHistoryPoint.deleteTransactionHistoryPoint = function (
 ) {
   try {
     db.query(
-      "UPDATE TransactionHistoryPoint SET status = 0 WHERE id = ?",
+      "UPDATE TransactionHistoryPoint SET status = 0 WHERE id = ? and status = 1",
       [transactionHistoryPointId],
       function (err, result) {
         if (result.affectedRows > 0) {
