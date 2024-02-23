@@ -1,6 +1,7 @@
 // clubClubMember.service.js
 const ClubMemberModel = require("../models/clubMember.model");
 const ClubModel = require("../models/club.model");
+const ClubMemSlot = require("../models/clubMemSlot.model");
 
 class ClubMemberService {
   static getAllClubMembers(callback) {
@@ -13,6 +14,14 @@ class ClubMemberService {
 
   static getClubMemberById(clubMemberId, callback) {
     ClubMemberModel.getClubMemberById(clubMemberId, callback);
+  }
+
+  static getbyslotid(slotId, callback) {
+    ClubMemSlot.getClubMemsBySlotId(slotId, (response) => {
+      if (response.status === "success") {
+        ClubMemberModel.getbyslotids(response.result, callback);
+      }
+    });
   }
 
   static getByIdMemberClub(clubId, MemberId, callback) {

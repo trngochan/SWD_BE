@@ -86,6 +86,30 @@ ClubMember.getByIdMemberClub = function (clubId, MemberId, callback) {
   }
 };
 
+ClubMember.getbyslotids = function (clubmems, callback) {
+  const clubmemId = clubmems.map((row) => row.clubMemberId);
+  try {
+    db.query(
+      "SELECT * FROM ClubMember WHERE id  IN (?) AND status = 1 ORDER BY id DESC",
+      [clubmemId],
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({
+            status: "error",
+            message: "Error getting clubMember by ID",
+          });
+        } else {
+          callback({ status: "success", result: result });
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    callback({ status: "error", message: "Error getting clubMember by ID" });
+  }
+};
+
 ClubMember.createClubMember = function (newClubMember, callback) {
   try {
     db.query(
