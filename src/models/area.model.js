@@ -47,6 +47,27 @@ Area.getAreaById = function (areaId, callback) {
   }
 };
 
+Area.getByYardId = function (yardId, callback) {
+  console.log(yardId);
+  try {
+    db.query(
+      "SELECT * FROM Area WHERE yardId = ? and status = 1",
+      yardId,
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({ status: "error", message: "Error getting area by ID" });
+        } else {
+          callback({ status: "success", result: result[0] });
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    callback({ status: "error", message: "Error getting area by ID" });
+  }
+};
+
 Area.getAllAreas = function (callback) {
   try {
     db.query("SELECT * FROM Area", function (err, result) {

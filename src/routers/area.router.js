@@ -5,6 +5,9 @@ const AreaController = require("../controllers/area.controller");
 // Tạo mới khu vực
 router.post("/areas", AreaController.create_area);
 
+// get by yard id
+router.get("/areas/:id/getByYardId", AreaController.getByYardId);
+
 // Lấy thông tin của một khu vực cụ thể
 router.get("/areas/:id", AreaController.get_area);
 

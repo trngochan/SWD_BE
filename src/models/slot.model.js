@@ -60,13 +60,18 @@ Slot.getSlotById = function (slotId, callback) {
 
 Slot.getSlotJoined = function (slotsId, callback) {
   try {
-    const slotIds = slotsId.map((row) => row.slotId);
+    var slotIds = slotsId.map((row) => row.slotId);
+    if (slotIds.length == 0) {
+      slotIds = [0];
+    }
     db.query(
       "SELECT * FROM Slot WHERE id IN (?) AND status = 1 ORDER BY id DESC",
       [slotIds],
       function (err, result) {
         if (err) {
           console.error(err);
+          console.log(slotIds);
+
           callback({ status: "error", message: "Error getting slot by ID" });
         } else {
           callback({ status: "success", result: result });

@@ -6,6 +6,10 @@ exports.createArea = function (newArea, callback) {
   });
 };
 
+exports.getByYardId = function (yardId, callback) {
+  Area.getByYardId(yardId, callback);
+};
+
 exports.getAreaById = function (areaId, callback) {
   Area.getAreaById(areaId, function (result) {
     callback(result);

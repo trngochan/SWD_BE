@@ -11,6 +11,17 @@ exports.create_area = function (req, res) {
   });
 };
 
+exports.getByYardId = function (req, res) {
+  const YardId = req.params.id;
+  AreaService.getByYardId(YardId, function (result) {
+    if (result.status === "success") {
+      res.status(201).json({ message: result.message });
+    } else if (result.status === "error") {
+      res.status(400).json({ message: result.message });
+    }
+  });
+};
+
 exports.get_area = function (req, res) {
   const areaId = req.params.id;
   AreaService.getAreaById(areaId, function (result) {

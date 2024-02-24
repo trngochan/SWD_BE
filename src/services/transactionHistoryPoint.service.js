@@ -5,7 +5,7 @@ class TransactionHistoryPointService {
     TransactionHistoryPointModel.getAllTransactionHistoryPoints(callback);
   }
 
-  static get_by_idWallet(idWallet,callback) {
+  static get_by_idWallet(idWallet, callback) {
     TransactionHistoryPointModel.get_by_idWallet(idWallet, callback);
   }
 

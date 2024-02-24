@@ -89,16 +89,8 @@ TransactionHistoryPoint.get_by_idWallet = function (idWallet, callback) {
             message: "Error getting transactionHistoryPoint by ID",
           });
         } else {
-          if (result.length > 0) {
-            // Nếu có dữ liệu trả về
-            callback({ status: "success", result: result[0] });
-          } else {
-            // Nếu không có dữ liệu
-            callback({
-              status: "error",
-              message: "TransactionHistoryPoint not found",
-            });
-          }
+          // Nếu có dữ liệu trả về
+          callback({ status: "success", result: resul });
         }
       }
     );
