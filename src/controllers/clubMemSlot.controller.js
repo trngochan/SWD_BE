@@ -30,6 +30,35 @@ exports.create = function (req, res) {
   );
 };
 
+exports.comfirm_joining = function (req, res) {
+  const clubMemSlotId = req.params.id;
+  const inforWallet = req.body.inforWallet;
+  const tranPoint = req.body.tranPoint;
+  ClubMemSlotService.comfirm_joining(
+    clubMemSlotId,
+    inforWallet,
+    tranPoint,
+    function (result) {
+      if (result.status === "success") {
+        res.status(200).json({ message: result.message });
+      } else if (result.status === "error") {
+        res.status(404).json({ message: result.message });
+      }
+    }
+  );
+};
+
+exports.comfirm_no_joining = function (req, res) {
+  const clubMemSlotId = req.params.id;
+  ClubMemSlotService.comfirm_no_joining(clubMemSlotId, function (result) {
+    if (result.status === "success") {
+      res.status(200).json({ message: result.message });
+    } else if (result.status === "error") {
+      res.status(404).json({ message: result.message });
+    }
+  });
+};
+
 exports.get_clubMemSlot = function (req, res) {
   const clubMemSlotId = req.params.id;
   ClubMemSlotService.getClubMemSlotById(clubMemSlotId, function (result) {

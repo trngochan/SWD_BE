@@ -8,6 +8,17 @@ router.get("/clubMemSlots", ClubMemSlotController.get_list);
 // Tạo mới clubMemSlots
 router.post("/clubMemSlots", ClubMemSlotController.create);
 
+// Tạo mới clubMemSlots
+router.put(
+  "/clubMemSlots/:id/confirmJoining",
+  ClubMemSlotController.comfirm_joining
+);
+
+router.put(
+  "/clubMemSlots/:id/confirmNoJoining",
+  ClubMemSlotController.comfirm_no_joining
+);
+
 // Lấy thông tin của một clubMemSlots cụ thể
 router.get("/clubMemSlots/:id", ClubMemSlotController.get_clubMemSlot);
 

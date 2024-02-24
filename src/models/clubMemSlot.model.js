@@ -218,6 +218,81 @@ ClubMemSlot.updateClubMemSlot = function (
   }
 };
 
+ClubMemSlot.comfirm_no_joining = function (clubMemSlotId, callback) {
+  try {
+    db.query(
+      "UPDATE ClubMemSlot SET joinStatus = 'confirm_no_joined' WHERE id = ? and status = 1",
+      [clubMemSlotId],
+      function (err, result) {
+        if (err) {
+          callback({ status: "error", message: "Error updating clubMemSlot" });
+        } else {
+          if (result.affectedRows > 0) {
+            callback({
+              status: "success",
+              message: "ClubMemSlot updated successfully",
+            });
+          } else {
+            callback({ status: "error", message: "ClubMemSlot not found" });
+          }
+        }
+      }
+    );
+  } catch (error) {
+    callback({ status: "error", message: "An error occurred" });
+  }
+};
+
+ClubMemSlot.comfirm_joining = function (clubMemSlotId, callback) {
+  try {
+    db.query(
+      "UPDATE ClubMemSlot SET joinStatus = 'confirm_joined' WHERE id = ? and status = 1",
+      [clubMemSlotId],
+      function (err, result) {
+        if (err) {
+          callback({ status: "error", message: "Error updating clubMemSlot" });
+        } else {
+          if (result.affectedRows > 0) {
+            callback({
+              status: "success",
+              message: "ClubMemSlot updated successfully",
+            });
+          } else {
+            callback({ status: "error", message: "ClubMemSlot not found" });
+          }
+        }
+      }
+    );
+  } catch (error) {
+    callback({ status: "error", message: "An error occurred" });
+  }
+};
+
+ClubMemSlot.comfirm_no_joining = function (clubMemSlotId, callback) {
+  try {
+    db.query(
+      "UPDATE ClubMemSlot SET joinStatus = 'confirm_no_joined' WHERE id = ? and status = 1",
+      [clubMemSlotId],
+      function (err, result) {
+        if (err) {
+          callback({ status: "error", message: "Error updating clubMemSlot" });
+        } else {
+          if (result.affectedRows > 0) {
+            callback({
+              status: "success",
+              message: "ClubMemSlot updated successfully",
+            });
+          } else {
+            callback({ status: "error", message: "ClubMemSlot not found" });
+          }
+        }
+      }
+    );
+  } catch (error) {
+    callback({ status: "error", message: "An error occurred" });
+  }
+};
+
 ClubMemSlot.deleteClubMemSlot = function (clubMemSlotId, callback) {
   try {
     db.query(

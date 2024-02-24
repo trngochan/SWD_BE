@@ -22,13 +22,48 @@ class ClubMemSlotService {
                 walletId: idWallet,
                 point: tranPoint.point,
               },
-              () => {}
+              (response) => {
+                if (response.status == "success") {
+                  callback(result);
+                }
+              }
             );
           }
         );
       }
       callback(result);
     });
+  }
+
+  static createClubMemSlot(newClubMemSlot, inforWallet, tranPoint, callback) {
+    ClubMemSlotModel.comfirm_joining(newClubMemSlot, function (result) {
+      const idWallet = inforWallet.id;
+      if (result.status === "success") {
+        TransactionHistoryPoint.createTransactionHistoryPointWhenConfirmJoinSlot(
+          inforWallet,
+          tranPoint,
+          result.result,
+          () => {
+            Wallet.addPoint(
+              {
+                walletId: idWallet,
+                point: tranPoint.point,
+              },
+              (response) => {
+                if (response.status == "success") {
+                  callback(result);
+                }
+              }
+            );
+          }
+        );
+      }
+      callback(result);
+    });
+  }
+
+  static comfirm_no_joining(clubMemSlotId, callback) {
+    ClubMemSlotModel.comfirm_no_joining(clubMemSlotId, callback);
   }
 
   static getClubMemSlotById(clubMemSlotId, callback) {

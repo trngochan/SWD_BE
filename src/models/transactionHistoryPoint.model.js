@@ -173,6 +173,42 @@ TransactionHistoryPoint.createTransactionHistoryPointWhenJoinSlot = function (
   }
 };
 
+TransactionHistoryPoint.createTransactionHistoryPointWhenConfirmJoinSlot =
+  function (inforWallet, tranPoint, clubMemSlotId, callback) {
+    try {
+      const data = {
+        walletID: inforWallet.id,
+        clubMemSlotId: clubMemSlotId,
+        initialPoint: inforWallet.point,
+        transactionPointId: tranPoint.id,
+        transactionPoint: parseInt(+tranPoint.point),
+        desciption: "confirm_joined",
+      };
+      db.query(
+        "INSERT INTO TransactionHistoryPoint SET ?",
+        data,
+        function (err, result) {
+          if (err) {
+            callback({
+              status: "error",
+              message: "Error creating transactionHistoryPoint",
+            });
+          } else {
+            callback({
+              status: "success",
+              message: "Created transactionHistoryPoint successfully",
+            });
+          }
+        }
+      );
+    } catch (error) {
+      callback({
+        status: "error",
+        message: "Error creating transactionHistoryPoint",
+      });
+    }
+  };
+
 TransactionHistoryPoint.updateTransactionHistoryPoint = function (
   transactionHistoryPointId,
   updatedTransactionHistoryPoint,
