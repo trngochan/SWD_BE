@@ -90,7 +90,7 @@ TransactionHistoryPoint.get_by_idWallet = function (idWallet, callback) {
           });
         } else {
           // Nếu có dữ liệu trả về
-          callback({ status: "success", result: resul });
+          callback({ status: "success", result: result });
         }
       }
     );
