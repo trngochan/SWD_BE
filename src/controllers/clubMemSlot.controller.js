@@ -31,11 +31,13 @@ exports.create = function (req, res) {
 };
 
 exports.comfirm_joining = function (req, res) {
-  const clubMemSlotId = req.params.id;
+  const clubMemId = req.params.idclubmem;
+  const SlotId = req.params.idslot;
   const inforWallet = req.body.inforWallet;
   const tranPoint = req.body.tranPoint;
   ClubMemSlotService.comfirm_joining(
-    clubMemSlotId,
+    clubMemId,
+    SlotId,
     inforWallet,
     tranPoint,
     function (result) {

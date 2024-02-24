@@ -10,7 +10,7 @@ router.post("/clubMemSlots", ClubMemSlotController.create);
 
 // Tạo mới clubMemSlots
 router.put(
-  "/clubMemSlots/:id/confirmJoining",
+  "/clubMemSlots/:idclubmem/:idslot/confirmJoining",
   ClubMemSlotController.comfirm_joining
 );
 
