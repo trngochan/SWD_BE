@@ -51,8 +51,9 @@ exports.comfirm_joining = function (req, res) {
 };
 
 exports.comfirm_no_joining = function (req, res) {
-  const clubMemSlotId = req.params.id;
-  ClubMemSlotService.comfirm_no_joining(clubMemSlotId, function (result) {
+  const clubMemId = req.params.idclubmem;
+  const SlotId = req.params.idslot;
+  ClubMemSlotService.comfirm_no_joining(clubMemId, SlotId, function (result) {
     if (result.status === "success") {
       res.status(200).json({ message: result.message });
     } else if (result.status === "error") {

@@ -62,8 +62,8 @@ class ClubMemSlotService {
     });
   }
 
-  static comfirm_no_joining(clubMemSlotId, callback) {
-    ClubMemSlotModel.comfirm_no_joining(clubMemSlotId, callback);
+  static comfirm_no_joining(clubMemId, SlotId, callback) {
+    ClubMemSlotModel.comfirm_no_joining(clubMemId, SlotId, callback);
   }
 
   static getClubMemSlotById(clubMemSlotId, callback) {

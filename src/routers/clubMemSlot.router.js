@@ -15,7 +15,7 @@ router.put(
 );
 
 router.put(
-  "/clubMemSlots/:id/confirmNoJoining",
+  "/clubMemSlots/:idclubmem/:idslot/confirmNoJoining",
   ClubMemSlotController.comfirm_no_joining
 );
 
