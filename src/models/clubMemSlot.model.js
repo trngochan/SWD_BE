@@ -12,7 +12,7 @@ const ClubMemSlot = function (clubMemSlot) {
 ClubMemSlot.getAllClubMemSlots = function (callback) {
   try {
     db.query(
-      "SELECT * FROM ClubMemSlot and status = 1",
+      "SELECT * FROM ClubMemSlot where status = 1",
       function (err, result) {
         if (err) {
           console.error(err);

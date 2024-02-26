@@ -8,7 +8,7 @@ router.get("/clubMemSlots", ClubMemSlotController.get_list);
 // Tạo mới clubMemSlots
 router.post("/clubMemSlots", ClubMemSlotController.create);
 
-// Tạo mới clubMemSlots
+// xac nhan join hay khong
 router.put(
   "/clubMemSlots/:idclubmem/:idslot/confirmJoining",
   ClubMemSlotController.comfirm_joining

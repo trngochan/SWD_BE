@@ -12,17 +12,20 @@ const ClubMember = function (clubMember) {
 
 ClubMember.getAllClubMembers = function (callback) {
   try {
-    db.query("SELECT * FROM ClubMember", function (err, result) {
-      if (err) {
-        console.error(err);
-        callback({ status: "error", message: "ClubMember get all fail" });
-      } else {
-        callback({
-          status: "success",
-          result: result,
-        });
+    db.query(
+      "SELECT * FROM ClubMember where status = 1",
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({ status: "error", message: "ClubMember get all fail" });
+        } else {
+          callback({
+            status: "success",
+            result: result,
+          });
+        }
       }
-    });
+    );
   } catch (error) {
     callback({ status: "error", message: "ClubMember get all fail" });
   }
