@@ -91,6 +91,7 @@ ClubMember.getByIdMemberClub = function (clubId, MemberId, callback) {
 
 ClubMember.getbyslotids = function (clubmems, callback) {
   const clubmemId = clubmems.map((row) => row.clubMemberId);
+  console.log(clubmems);
   try {
     db.query(
       "SELECT * FROM ClubMember WHERE id  IN (?) AND status = 1 ORDER BY id DESC",
@@ -103,7 +104,11 @@ ClubMember.getbyslotids = function (clubmems, callback) {
             message: "Error getting clubMember by ID",
           });
         } else {
-          callback({ status: "success", result: result });
+          callback({
+            status: "success",
+            result: result,
+            IdClubMemberSlots: clubmems,
+          });
         }
       }
     );

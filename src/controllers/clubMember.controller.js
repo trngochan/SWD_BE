@@ -37,7 +37,12 @@ exports.getbyslotid = function (req, res) {
   const idslot = req.params.idslot;
   ClubMemberService.getbyslotid(idslot, function (result) {
     if (result.status === "success") {
-      res.status(200).json({ result: result.result });
+      res
+        .status(200)
+        .json({
+          result: result.result,
+          IdClubMemberSlots: result.IdClubMemberSlots,
+        });
     } else if (result.status === "error") {
       res.status(404).json({ message: result.message });
     }

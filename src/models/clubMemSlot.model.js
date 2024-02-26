@@ -86,7 +86,7 @@ ClubMemSlot.geSlotJoinedByClubMember = function (clubMem, callback) {
 ClubMemSlot.getClubMemsBySlotId = function (slotId, callback) {
   try {
     db.query(
-      "SELECT clubMemberId  FROM ClubMemSlot WHERE slotId = ? AND status = 1 ORDER BY id DESC;",
+      "SELECT clubMemberId, id as clubMemberSlotId  FROM ClubMemSlot WHERE slotId = ? AND status = 1 ORDER BY id DESC;",
       slotId,
       function (err, result) {
         if (err) {
