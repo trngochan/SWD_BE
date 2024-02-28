@@ -35,6 +35,7 @@ exports.comfirm_joining = function (req, res) {
   const SlotId = req.params.idslot;
   const inforWallet = req.body.inforWallet;
   const tranPoint = req.body.tranPoint;
+  console.log(req.body);
   ClubMemSlotService.comfirm_joining(
     clubMemId,
     SlotId,

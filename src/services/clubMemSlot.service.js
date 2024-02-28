@@ -40,12 +40,13 @@ class ClubMemSlotService {
   static comfirm_joining(clubMemId, SlotId, inforWallet, tranPoint, callback) {
     ClubMemSlotModel.comfirm_joining(clubMemId, SlotId, function (result) {
       const idWallet = inforWallet.id;
+      console.log("id", result.result);
       if (result.status === "success") {
         TransactionHistoryPoint.createTransactionHistoryPointWhenConfirmJoinSlot(
           inforWallet,
           tranPoint,
           result.result,
-          () => {
+          (response) => {
             Wallet.addPoint(
               {
                 walletId: idWallet,
@@ -60,7 +61,7 @@ class ClubMemSlotService {
           }
         );
       }
-      callback(result);
+      // callback(result);
     });
   }
 

@@ -12,7 +12,7 @@ const ClubMemSlot = function (clubMemSlot) {
 ClubMemSlot.getAllClubMemSlots = function (callback) {
   try {
     db.query(
-      "SELECT * FROM ClubMemSlot where status = 1",
+      "SELECT * FROM ClubMemSlot where status = 1 ORDER BY id DESC",
       function (err, result) {
         if (err) {
           console.error(err);
@@ -33,7 +33,7 @@ ClubMemSlot.getAllClubMemSlots = function (callback) {
 ClubMemSlot.getClubMemSlotById = function (clubMemSlotId, callback) {
   try {
     db.query(
-      "SELECT * FROM ClubMemSlot WHERE id = ? and status = 1",
+      "SELECT * FROM ClubMemSlot WHERE id = ? and status = 1 ORDER BY id DESC",
       clubMemSlotId,
       function (err, result) {
         if (err) {
@@ -134,7 +134,7 @@ ClubMemSlot.getSlotJoinedIDByClubMember = function (clubMem, callback) {
 ClubMemSlot.getNumberOfSlot = function (slotId, callback) {
   try {
     db.query(
-      "SELECT COUNT(*) AS numberOfSlots FROM ClubMemSlot WHERE slotId = ? and status = 1",
+      "SELECT COUNT(*) AS numberOfSlots FROM ClubMemSlot WHERE slotId = ? and status = 1 ",
       slotId,
       function (err, result) {
         if (err) {
@@ -196,7 +196,7 @@ ClubMemSlot.updateClubMemSlot = function (
 ) {
   try {
     db.query(
-      "UPDATE ClubMemSlot SET ? WHERE id = ? and status = 1",
+      "UPDATE ClubMemSlot SET ? WHERE id = ? and status = 1 ",
       [updatedClubMemSlot, clubMemSlotId],
       function (err, result) {
         if (err) {
@@ -249,13 +249,33 @@ ClubMemSlot.comfirm_joining = function (clubMemId, SlotId, callback) {
           callback({ status: "error", message: "Error updating clubMemSlot" });
         } else {
           if (result.affectedRows > 0) {
-            const insertedId = result.insertId;
-
-            callback({
-              status: "success",
-              message: "ClubMemSlot updated successfully",
-              result: insertedId,
-            });
+            // Truy vấn lại bản ghi với điều kiện clubMemberId và SlotId
+            db.query(
+              "SELECT id FROM ClubMemSlot WHERE clubMemberId = ? and slotId = ? ORDER BY id DESC",
+              [clubMemId, SlotId],
+              function (err, rows) {
+                if (err) {
+                  callback({
+                    status: "error",
+                    message: "Error retrieving updated ClubMemSlot",
+                  });
+                } else {
+                  if (rows.length > 0) {
+                    const updatedId = rows[0].id;
+                    callback({
+                      status: "success",
+                      message: "ClubMemSlot updated successfully",
+                      result: updatedId,
+                    });
+                  } else {
+                    callback({
+                      status: "error",
+                      message: "ClubMemSlot not found after update",
+                    });
+                  }
+                }
+              }
+            );
           } else {
             callback({ status: "error", message: "ClubMemSlot not found" });
           }
@@ -316,7 +336,7 @@ ClubMemSlot.deleteClubMemSlot = function (clubMemSlotId, callback) {
 ClubMemSlot.getClubMemSlotByEmail = function (email, callback) {
   try {
     db.query(
-      "SELECT * FROM ClubMemSlot WHERE email = ? and status = 1",
+      "SELECT * FROM ClubMemSlot WHERE email = ? and status = 1 ORDER BY id DESC",
       email,
       function (err, result) {
         if (err) {
