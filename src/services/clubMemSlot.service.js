@@ -16,22 +16,24 @@ class ClubMemSlotService {
           inforWallet,
           tranPoint,
           result.result,
-          () => {
-            Wallet.decreaPoint(
-              {
-                walletId: idWallet,
-                point: tranPoint.point,
-              },
-              (response) => {
-                if (response.status == "success") {
-                  callback(result);
+          (response1) => {
+            if (response1.status === "success") {
+              Wallet.decreaPoint(
+                {
+                  walletId: idWallet,
+                  point: tranPoint.point,
+                },
+                (response) => {
+                  if (response.status == "success") {
+                    callback(result);
+                  }
                 }
-              }
-            );
+              );
+            }
           }
         );
       }
-      callback(result);
+      // callback(result);
     });
   }
 
