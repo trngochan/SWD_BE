@@ -8,4 +8,5 @@ exports.approveSport = function (sportId, callback) {
     Sport.approveSport(sportId, callback);
 };
 
+
 module.exports = AdminService;
