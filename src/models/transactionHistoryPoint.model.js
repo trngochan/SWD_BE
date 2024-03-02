@@ -147,6 +147,7 @@ TransactionHistoryPoint.createTransactionHistoryPointWhenJoinSlot = function (
       initialPoint: inforWallet.point,
       transactionPointId: tranPoint.id,
       transactionPoint: parseInt(-tranPoint.point),
+      desciption: `join slot `,
     };
     db.query(
       "INSERT INTO TransactionHistoryPoint SET ?",
