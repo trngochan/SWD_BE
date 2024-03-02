@@ -9,6 +9,8 @@ router.post("/login-member", AuthController.login_member);
 // API đăng nhập member
 router.post("/login-admin", AuthController.login_admin);
 
+router.post("/login-staff", AuthController.login_staff);
+
 // API đăng ký thành viên
 router.post("/register", AuthController.registerMember);
 

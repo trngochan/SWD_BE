@@ -21,6 +21,8 @@ const yardRoutes = require("./src/routers/yard.router");
 const authRoutes = require("./src/routers/auth.router");
 const authMiddleware = require("./src/common/authMiddleware");
 
+const adminRoutes = require("./src/routers/adminRoutes/admin.router");
+
 const PORT = process.env.PORT || 3000;
 
 const app = express();
@@ -55,6 +57,7 @@ app.use("/api", buildingRoutes);
 app.use("/api", sportRoutes);
 app.use("/api", yardRoutes);
 
+app.use("/api/admin", adminRoutes);
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });

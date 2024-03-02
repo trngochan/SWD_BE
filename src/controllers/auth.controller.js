@@ -28,6 +28,19 @@ exports.login_admin = function (req, res) {
   });
 };
 
+exports.login_staff = function (req, res) {
+  const { username, password } = req.body;
+  AuthService.login_staff(username, password, function (data) {
+    if (data.status === "success") {
+      // Đăng nhập thành công, trả về token hoặc thông tin người dùng
+      res.send({ token: data.token, user: data.user });
+    } else {
+      // Đăng nhập thất bại, trả về thông báo lỗi
+      res.status(401).send({ message: data.message });
+    }
+  });
+};
+
 exports.registerMember = function (req, res) {
   const newMember = req.body;
 

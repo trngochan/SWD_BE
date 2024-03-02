@@ -8,6 +8,7 @@ const Club = function (club) {
   this.sportName = club.sportName;
   this.sportId = club.sportId;
   this.status = club.status;
+  this.approveStatus = club.approveStatus;
   this.dateTime = club.dateTime;
 };
 
@@ -111,11 +112,12 @@ Club.getClubById = function (clubId, callback) {
 };
 
 Club.createClub = function (newClub, callback) {
-  newClub.status = 2;
+  newClub.status = 1;
   newClub.dateTime = new Date();
   try {
     db.query("INSERT INTO Club SET ?", newClub, function (err, result) {
       if (err) {
+        console.error(err);
         callback({ status: "error", message: "Error creating club" });
       } else {
         callback({
@@ -207,7 +209,7 @@ Club.getClubByEmail = function (email, callback) {
 Club.approveClub = function (clubId, callback) {
   try {
     db.query(
-      "UPDATE Club SET status = 1 WHERE id = ?",
+      "UPDATE Club SET approveStatus = 1 WHERE id = ?",
       clubId,
       function (err, result) {
         if (err || result.affectedRows === 0) {
