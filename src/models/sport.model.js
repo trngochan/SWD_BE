@@ -10,7 +10,7 @@ const Sport = function (sport) {
 };
 
 Sport.createSport = function (newSport, callback) {
-  newSport.status=1;
+  newSport.status=2;
   newSport.dateTime= new Date();
   try {
     db.query("INSERT INTO Sport SET ?", newSport, function (err, result) {
@@ -108,6 +108,23 @@ Sport.deleteSport = function (sportId, callback) {
     });
   } catch (error) {
     callback({ status: "error", message: "Failed to delete sport" });
+  }
+};
+
+Sport.approveSport = function (sportId, callback) {
+  try {
+    db.query("UPDATE Sport SET status = 1 WHERE id = ?", sportId, function (err, result) {
+      if (err || result.affectedRows === 0) {
+        callback({ status: "error", message: "Error approving sport or sport not found" });
+      } else {
+        callback({
+          status: "success",
+          message: "Sport approved successfully",
+        });
+      }
+    });
+  } catch (error) {
+    callback({ status: "error", message: "Error approving Sport" });
   }
 };
 
