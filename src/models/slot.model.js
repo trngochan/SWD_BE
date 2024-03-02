@@ -35,7 +35,7 @@ Slot.getAllSlots = function (callback) {
 Slot.getSlotById = function (slotId, callback) {
   try {
     db.query(
-      "SELECT * FROM Slot WHERE id = ? and status = 1",
+      "SELECT * FROM Slot WHERE id = ? and status = 1 ORDER BY id DESC",
       slotId,
       function (err, result) {
         if (err) {
@@ -109,7 +109,7 @@ Slot.getSlotNotJoin = function (slotsId, callback) {
 Slot.getByIdClubMember = function (clubMemberId, callback) {
   try {
     db.query(
-      "SELECT * FROM Slot WHERE memberPostId = ? and status = 1",
+      "SELECT * FROM Slot WHERE memberPostId = ? and status = 1 ORDER BY id DESC",
       clubMemberId,
       function (err, result) {
         if (err) {
@@ -130,7 +130,7 @@ Slot.getByIdClubMember = function (clubMemberId, callback) {
 Slot.getByIdClub = function (clubId, callback) {
   try {
     db.query(
-      "SELECT * FROM Slot WHERE clubId = ? and status = 1",
+      "SELECT * FROM Slot WHERE clubId = ? and status = 1 ORDER BY id DESC ",
       clubId,
       function (err, result) {
         if (err) {
@@ -217,7 +217,7 @@ Slot.deleteSlot = function (slotId, callback) {
 Slot.getSlotByEmail = function (email, callback) {
   try {
     db.query(
-      "SELECT * FROM Slot WHERE email = ?",
+      "SELECT * FROM Slot WHERE email = ? and status = 1  ORDER BY id DESC",
       email,
       function (err, result) {
         if (err) {

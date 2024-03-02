@@ -35,12 +35,14 @@ exports.comfirm_joining = function (req, res) {
   const SlotId = req.params.idslot;
   const inforWallet = req.body.inforWallet;
   const tranPoint = req.body.tranPoint;
+  const memberId = req.body.memberId;
   console.log(req.body);
   ClubMemSlotService.comfirm_joining(
     clubMemId,
     SlotId,
     inforWallet,
     tranPoint,
+    memberId,
     function (result) {
       if (result.status === "success") {
         res.status(200).json({ message: result.message });
