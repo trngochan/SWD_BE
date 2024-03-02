@@ -104,7 +104,7 @@ Wallet.addPoint = function (data, callback) {
   try {
     // Sử dụng câu truy vấn SQL UPDATE để cập nhật thuộc tính point
     db.query(
-      "UPDATE Wallet SET point = point + ? WHERE id = ?",
+      "UPDATE Wallet SET point = point + ? WHERE memberId = ?",
       [tranPoint, idWallet],
       function (err, result) {
         if (err) {
