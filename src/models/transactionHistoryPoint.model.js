@@ -175,12 +175,12 @@ TransactionHistoryPoint.createTransactionHistoryPointWhenJoinSlot = function (
 };
 
 TransactionHistoryPoint.createTransactionHistoryPointWhenConfirmJoinSlot =
-  function (inforWallet, tranPoint, clubMemSlotId, callback) {
+  function (InforWallet, tranPoint, clubMemSlotId, callback) {
     try {
       const data = {
-        walletID: inforWallet.id,
+        walletID: InforWallet.id,
         clubMemSlotId: clubMemSlotId,
-        initialPoint: inforWallet.point,
+        initialPoint: InforWallet.point,
         transactionPointId: tranPoint.id,
         transactionPoint: parseInt(+tranPoint.point),
         desciption: "confirm_joined",
@@ -203,6 +203,7 @@ TransactionHistoryPoint.createTransactionHistoryPointWhenConfirmJoinSlot =
         }
       );
     } catch (error) {
+      console.log(error);
       callback({
         status: "error",
         message: "Error creating transactionHistoryPoint",
