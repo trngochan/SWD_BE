@@ -60,6 +60,7 @@ Wallet.getByMemberid = function (memberId, callback) {
       "SELECT * FROM Wallet WHERE memberId = ? and status = 1",
       memberId,
       function (err, result) {
+        console.log(result);
         if (err) {
           console.error(err);
           callback({ status: "error", message: "Error getting wallet by ID" });
