@@ -13,7 +13,8 @@ exports.get_list = function (req, res) {
 
 exports.create = function (req, res) {
   const newClub = req.body;
-  ClubService.createClub(newClub, function (result) {
+  const staffId = req.params.id;
+  ClubService.createClub(newClub,staffId, function (result) {
     if (result.status === "success") {
       res.status(200).json({ message: result.message });
     } else if (result.status === "error") {

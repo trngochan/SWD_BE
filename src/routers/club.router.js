@@ -6,7 +6,7 @@ const ClubController = require("../controllers/club.controller");
 router.get("/clubs", ClubController.get_list);
 
 // Tạo mới club
-router.post("/clubs", ClubController.create);
+router.post("/clubs/:id", ClubController.create);
 
 // Lấy thông tin của một club cụ thể
 router.get("/clubs/:id", ClubController.get_club);

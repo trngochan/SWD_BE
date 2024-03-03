@@ -6,8 +6,8 @@ class ClubService {
     ClubModel.getAllClubs(callback);
   }
 
-  static createClub(newClub, callback) {
-    ClubModel.createClub(newClub, callback);
+  static createClub(newClub,staffId, callback) {
+    ClubModel.createClub(newClub,staffId, callback);
   }
 
   static getClubById(clubId, callback) {
