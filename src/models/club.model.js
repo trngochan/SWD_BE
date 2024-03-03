@@ -141,6 +141,7 @@ Club.updateClub = function (clubId, updatedClub, callback) {
           callback({ status: "error", message: "Error updating club" });
         } else {
           if (result.affectedRows > 0) {
+            s;
             callback({
               status: "success",
               message: "Club updated successfully",
