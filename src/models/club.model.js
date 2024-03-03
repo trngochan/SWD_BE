@@ -123,7 +123,7 @@ Club.createClub = function (newClub, staffId, callback) {
       } else {
         // Lấy id của câu lạc bộ vừa được tạo
         const clubId = result.insertId;
-
+        
         // Thêm dòng mới vào bảng StaffClub
         const staffClubData = {
           staff_id: staffId,
@@ -149,6 +149,31 @@ Club.createClub = function (newClub, staffId, callback) {
   }
 };
 
+Club.updateClub = function (clubId, updatedClub, callback) {
+  try {
+    db.query(
+      "UPDATE Club SET ? WHERE id = ?",
+      [updatedClub, clubId],
+      function (err, result) {
+        if (err) {
+          callback({ status: "error", message: "Error updating club" });
+        } else {
+          if (result.affectedRows > 0) {
+            s;
+            callback({
+              status: "success",
+              message: "Club updated successfully",
+            });
+          } else {
+            callback({ status: "error", message: "Club not found" });
+          }
+        }
+      }
+    );
+  } catch (error) {
+    callback({ status: "error", message: "An error occurred" });
+  }
+};
 
 Club.deleteClub = function (clubId, callback) {
   try {
