@@ -4,6 +4,4 @@ const StaffController = require("../../controllers/staffControllers/staff.contro
 
 router.get("/get-club/:id", StaffController.get_managed_clubs);
 
-router.post("/manage-club", StaffController.manage_club);
-
 module.exports = router;
