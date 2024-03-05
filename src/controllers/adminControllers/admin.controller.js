@@ -24,7 +24,7 @@ exports.approve_club = function (req, res) {
 
   exports.create_staff = function (req, res) {
     const newStaff = req.body;
-    StaffService.createStaff(newStaff, function (result) {
+    AdminService.createStaff(newStaff, function (result) {
       if (result.status === "success") {
         res.status(200).json({ message: result.message });
       } else if (result.status === "error") {
@@ -35,7 +35,7 @@ exports.approve_club = function (req, res) {
   
   exports.get_staff = function (req, res) {
     const staffId = req.params.id;
-    StaffService.getStaffById(staffId, function (result) {
+    AdminService.getStaffById(staffId, function (result) {
       if (result.status === "success") {
         res.status(200).json({ result: result.result });
       } else if (result.status === "error") {
@@ -45,7 +45,7 @@ exports.approve_club = function (req, res) {
   };
   
   exports.get_all_staffs = function (req, res) {
-    StaffService.getAllStaffs(function (result) {
+    AdminService.getAllStaffs(function (result) {
       if (result.status === "success") {
         res.status(200).json({ result: result.result });
       } else if (result.status === "error") {
@@ -57,7 +57,7 @@ exports.approve_club = function (req, res) {
   exports.update_staff = function (req, res) {
     const staffId = req.params.id;
     const updatedStaff = req.body;
-    StaffService.updateStaff(staffId, updatedStaff, function (result) {
+    AdminService.updateStaff(staffId, updatedStaff, function (result) {
       if (result.status === "success") {
         res.status(200).json({ message: result.message });
       } else if (result.status === "error") {
@@ -68,7 +68,7 @@ exports.approve_club = function (req, res) {
   
   exports.delete_staff = function (req, res) {
     const staffId = req.params.id;
-    StaffService.deleteStaff(staffId, function (result) {
+    AdminService.deleteStaff(staffId, function (result) {
       if (result.status === "success") {
         res.status(200).json({ message: result.message });
       } else if (result.status === "error") {

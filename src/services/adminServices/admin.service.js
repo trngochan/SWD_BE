@@ -4,31 +4,31 @@ exports.approveClub = function (clubId, callback) {
     Club.approveClub(clubId, callback);
 };
 
-StaffService.createStaff = function (newStaff, callback) {
+exports.createStaff = function (newStaff, callback) {
     Staff.createStaff(newStaff, function (result) {
       callback(result);
     });
   };
   
-  StaffService.getStaffById = function (staffId, callback) {
+  exports.getStaffById = function (staffId, callback) {
     Staff.getStaffById(staffId, function (result) {
       callback(result);
     });
   };
   
-  StaffService.getAllStaffs = function (callback) {
+  exports.getAllStaffs = function (callback) {
     Staff.getAllStaffs(function (result) {
       callback(result);
     });
   };
   
-  StaffService.updateStaff = function (staffId, updatedStaff, callback) {
+  exports.updateStaff = function (staffId, updatedStaff, callback) {
     Staff.updateStaff(staffId, updatedStaff, function (result) {
       callback(result);
     });
   };
   
-  StaffService.deleteStaff = function (staffId, callback) {
+  exports.deleteStaff = function (staffId, callback) {
     Staff.deleteStaff(staffId, function (result) {
       callback(result);
     });
