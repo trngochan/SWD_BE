@@ -84,22 +84,38 @@ Slot.getSlotJoined = function (slotsId, callback) {
   }
 };
 
-Slot.getSlotNotJoin = function (slotsId, callback) {
+Slot.getSlotNotJoin = function (slotsId, idclub, callback) {
   try {
     const slotIds = slotsId.map((row) => row.slotId);
-    db.query(
-      "SELECT * FROM Slot WHERE id not IN (?) AND status = 1 ORDER BY id DESC",
-      [slotIds],
-      function (err, result) {
-        if (err) {
-          console.error(err);
-          callback({ status: "error", message: "Error getting slot by ID" });
-        } else {
-          // Nếu có dữ liệu trả về
-          callback({ status: "success", result: result });
+    if (slotIds.length > 0) {
+      db.query(
+        "SELECT * FROM Slot WHERE id not IN (?) AND clubId = ? and status = 1 ORDER BY id DESC",
+        [slotIds, idclub],
+        function (err, result) {
+          if (err) {
+            console.error(err);
+            callback({ status: "error", message: "Error getting slot by ID" });
+          } else {
+            // Nếu có dữ liệu trả về
+            callback({ status: "success", result: result });
+          }
         }
-      }
-    );
+      );
+    } else {
+      db.query(
+        "SELECT * FROM Slot WHERE status = 1 and clubId = ?  ORDER BY id DESC",
+        [idclub],
+        function (err, result) {
+          if (err) {
+            console.error(err);
+            callback({ status: "error", message: "Error getting slot by ID" });
+          } else {
+            // Nếu có dữ liệu trả về
+            callback({ status: "success", result: result });
+          }
+        }
+      );
+    }
   } catch (error) {
     console.error(error);
     callback({ status: "error", message: "Error getting slot by ID" });
