@@ -6,14 +6,14 @@ router.put("/club/:id", AdmninController.approve_club);
 
 router.put("/staff/:id", AdmninController.approve_staff);
 
-router.post("/staffs", StaffController.create_staff);
+router.post("/staffs", AdmninController.create_staff);
 
-router.get("/staffs/:id", StaffController.get_staff);
+router.get("/staffs/:id", AdmninController.get_staff);
 
-router.get("/staffs", StaffController.get_all_staffs);
+router.get("/staffs", AdmninController.get_all_staffs);
 
-router.put("/staffs/:id", StaffController.update_staff);
+router.put("/staffs/:id", AdmninController.update_staff);
 
-router.delete("/staffs/:id", StaffController.delete_staff);
+router.delete("/staffs/:id", AdmninController.delete_staff);
 
 module.exports = router;
