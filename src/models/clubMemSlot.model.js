@@ -251,7 +251,7 @@ ClubMemSlot.comfirm_joining = function (clubMemId, SlotId, callback) {
           if (result.affectedRows > 0) {
             // Truy vấn lại bản ghi với điều kiện clubMemberId và SlotId
             db.query(
-              "SELECT id FROM ClubMemSlot WHERE clubMemberId = ? and slotId = ? ORDER BY id DESC",
+              "SELECT id FROM ClubMemSlot WHERE clubMemberId = ? and slotId = ? and status = 1 ORDER BY id DESC",
               [clubMemId, SlotId],
               function (err, rows) {
                 if (err) {

@@ -37,29 +37,47 @@ class ClubMemSlotService {
     });
   }
 
-  static comfirm_joining(clubMemId, SlotId, inforWallet, tranPoint, callback) {
+  static comfirm_joining(clubMemId, SlotId, tranPoint, memberId, callback) {
     ClubMemSlotModel.comfirm_joining(clubMemId, SlotId, function (result) {
-      const idWallet = inforWallet.id;
       console.log("id", result.result);
       if (result.status === "success") {
-        TransactionHistoryPoint.createTransactionHistoryPointWhenConfirmJoinSlot(
-          inforWallet,
-          tranPoint,
-          result.result,
-          (response) => {
-            Wallet.addPoint(
-              {
-                walletId: idWallet,
-                point: tranPoint.point,
-              },
-              (response) => {
-                if (response.status == "success") {
-                  callback(result);
+        try {
+          Wallet.getByMemberid(memberId, function (response) {
+            // console.log("result", response.result.id);
+            console.log("result", memberId);
+            if (response.status === "success") {
+              TransactionHistoryPoint.createTransactionHistoryPointWhenConfirmJoinSlot(
+                response.result,
+                tranPoint,
+                result.result,
+                (response) => {
+                  if (response.status === "success") {
+                    Wallet.addPoint(
+                      {
+                        walletId: memberId,
+                        point: tranPoint.point,
+                      },
+                      (response) => {
+                        if (response.status == "success") {
+                          callback(result);
+                        }
+                      }
+                    );
+                  } else {
+                    console.log("erre");
+                  }
                 }
-              }
-            );
-          }
-        );
+              );
+            } else {
+              console.error(
+                "Error when getting wallet by ID:",
+                response.message
+              );
+            }
+          });
+        } catch (error) {
+          console.error("Error during execution:", error);
+        }
       }
       // callback(result);
     });

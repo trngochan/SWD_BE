@@ -5,6 +5,105 @@ const Staff = function (staff) {
   this.username = staff.username;
   this.password = staff.password;
 };
+Staff.createStaff = function (newStaff, callback) {
+  try {
+    db.query("INSERT INTO Staff SET ?", newStaff, function (err, result) {
+      if (err) {
+        callback({ status: "error", message: "Error creating staff" });
+      } else {
+        callback({
+          status: "success",
+          message: "Created staff successfully",
+        });
+      }
+    });
+  } catch (error) {
+    callback({ status: "error", message: "Error creating staff" });
+  }
+};
+
+Staff.getStaffById = function (staffId, callback) {
+  try {
+    db.query(
+      "SELECT * FROM Staff WHERE id = ?",
+      staffId,
+      function (err, result) {
+        if (err) {
+          callback({ status: "error", message: "Error getting staff by ID" });
+        } else {
+          if (result.length > 0) {
+            // Nếu có dữ liệu trả về
+            callback({ status: "success", result: result[0] });
+          } else {
+            // Nếu không có dữ liệu
+            callback({ status: "error", message: "Staff not found" });
+          }
+        }
+      }
+    );
+  } catch (error) {
+    callback({ status: "error", message: "Error getting staff by ID" });
+  }
+};
+
+Staff.getAllStaffs = function (callback) {
+  try {
+    db.query("SELECT * FROM Staff", function (err, result) {
+      if (err) {
+        callback({ status: "error", message: "Staff get all fail" });
+      } else {
+        callback({
+          status: "success",
+          result: result,
+        });
+      }
+    });
+  } catch (error) {
+    callback({ status: "error", message: "Staff get all fail" });
+  }
+};
+
+Staff.updateStaff = function (staffId, updatedStaff, callback) {
+  try {
+    db.query(
+      "UPDATE Staff SET ? WHERE id = ?",
+      [updatedStaff, staffId],
+      function (err, result) {
+        if (err) {
+          callback({ status: "error", message: "Error updating staff" });
+        } else {
+          if (result.affectedRows > 0) {
+            callback({
+              status: "success",
+              message: "Staff updated successfully",
+            });
+          } else {
+            callback({ status: "error", message: "Staff not found" });
+          }
+        }
+      }
+    );
+  } catch (error) {
+    callback({ status: "error", message: "An error occurred" });
+  }
+};
+
+Staff.deleteStaff = function (staffId, callback) {
+  try {
+    db.query("DELETE FROM Staff WHERE id = ?", staffId, function (err, result) {
+      if (result.affectedRows > 0) {
+        callback({
+          status: "success",
+          message: "Staff deleted successfully",
+        });
+      } else {
+        callback({ status: "error", message: "Staff deleted fail" });
+      }
+    });
+  } catch (error) {
+    callback({ status: "error", message: "Failed to delete staff" });
+  }
+};
 
 Staff.getByUsername = function (username, callback) {
   try {

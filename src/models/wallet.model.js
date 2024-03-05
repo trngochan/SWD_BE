@@ -60,6 +60,7 @@ Wallet.getByMemberid = function (memberId, callback) {
       "SELECT * FROM Wallet WHERE memberId = ? and status = 1",
       memberId,
       function (err, result) {
+        console.log(result);
         if (err) {
           console.error(err);
           callback({ status: "error", message: "Error getting wallet by ID" });
@@ -104,7 +105,7 @@ Wallet.addPoint = function (data, callback) {
   try {
     // Sử dụng câu truy vấn SQL UPDATE để cập nhật thuộc tính point
     db.query(
-      "UPDATE Wallet SET point = point + ? WHERE id = ?",
+      "UPDATE Wallet SET point = point + ? WHERE memberId = ?",
       [tranPoint, idWallet],
       function (err, result) {
         if (err) {
