@@ -6,8 +6,6 @@ const Staff = function (staff) {
   this.password = staff.password;
 };
 Staff.createStaff = function (newStaff, callback) {
-  newStaff.status=2;
-  newStaff.dateTime= new Date();
   try {
     db.query("INSERT INTO Staff SET ?", newStaff, function (err, result) {
       if (err) {
