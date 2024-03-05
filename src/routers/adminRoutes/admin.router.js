@@ -8,7 +8,7 @@ router.put("/staff/:id", AdmninController.approve_staff);
 
 router.post("/staffs", AdmninController.create_staff);
 
-router.get("/staffs/:id", AdmninController.get_staff);
+router.get("/staffs/:email", AdmninController.get_staff_email);
 
 router.get("/staffs", AdmninController.get_all_staffs);
 

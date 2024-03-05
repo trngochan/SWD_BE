@@ -10,8 +10,8 @@ exports.createStaff = function (newStaff, callback) {
     });
   };
   
-  exports.getStaffById = function (staffId, callback) {
-    Staff.getStaffById(staffId, function (result) {
+  exports.getStaffByEmail = function (staffEmail, callback) {
+    Staff.getStaffByEmail(staffEmail, function (result) {
       callback(result);
     });
   };

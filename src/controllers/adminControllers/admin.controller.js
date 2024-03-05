@@ -33,9 +33,9 @@ exports.approve_club = function (req, res) {
     });
   };
   
-  exports.get_staff = function (req, res) {
-    const staffId = req.params.id;
-    AdminService.getStaffById(staffId, function (result) {
+  exports.get_staff_email = function (req, res) {
+    const staffEmail = req.params.email;
+    AdminService.getStaffByEmail(staffEmail, function (result) {
       if (result.status === "success") {
         res.status(200).json({ result: result.result });
       } else if (result.status === "error") {
