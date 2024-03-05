@@ -1,11 +1,18 @@
 const db = require("../common/connect");
 
 const Staff = function (staff) {
-  this.id = staff.id;
-  this.username = staff.username;
-  this.password = staff.password;
+  this.id = member.id;
+  this.name = member.name;
+  this.email = member.email;
+  this.password = member.password;
+  this.image = member.image;
+  this.gender = member.gender;
+  this.phoneNumber = member.phoneNumber;
+  this.status = member.status;
+  this.dateTime = member.dateTime;
 };
 Staff.createStaff = function (newStaff, callback) {
+  newMember.status = 1;
   try {
     db.query("INSERT INTO Staff SET ?", newStaff, function (err, result) {
       if (err) {
