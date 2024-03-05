@@ -39,7 +39,6 @@ class ClubMemSlotService {
 
   static comfirm_joining(clubMemId, SlotId, tranPoint, memberId, callback) {
     ClubMemSlotModel.comfirm_joining(clubMemId, SlotId, function (result) {
-      console.log("id", result.result);
       if (result.status === "success") {
         try {
           Wallet.getByMemberid(memberId, function (response) {
@@ -51,21 +50,17 @@ class ClubMemSlotService {
                 tranPoint,
                 result.result,
                 (response) => {
-                  if (response.status === "success") {
-                    Wallet.addPoint(
-                      {
-                        walletId: memberId,
-                        point: tranPoint.point,
-                      },
-                      (response) => {
-                        if (response.status == "success") {
-                          callback(result);
-                        }
+                  Wallet.addPoint(
+                    {
+                      walletId: memberId,
+                      point: tranPoint.point,
+                    },
+                    (response) => {
+                      if (response.status == "success") {
+                        callback(result);
                       }
-                    );
-                  } else {
-                    console.log("erre");
-                  }
+                    }
+                  );
                 }
               );
             } else {
