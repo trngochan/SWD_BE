@@ -11,6 +11,17 @@ exports.approve_club = function (req, res) {
     });
   };
 
+  exports.reject_club = function (req, res) {
+    const clubId = req.params.id;
+    AdminService.rejectClub(clubId, function (result) {
+      if (result.status === "success") {
+        res.status(201).json({ message: result.message });
+      } else if (result.status === "error") {
+        res.status(400).json({ message: result.message });
+      }
+    });
+  };
+
   exports.approve_staff = function (req, res) {
     const staffId = req.params.id;
     AdminService.approveStaff(staffId, function (result) {
