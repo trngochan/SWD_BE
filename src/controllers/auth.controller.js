@@ -29,8 +29,8 @@ exports.login_admin = function (req, res) {
 };
 
 exports.login_staff = function (req, res) {
-  const { username, password } = req.body;
-  AuthService.login_staff(username, password, function (data) {
+  const { email, password } = req.body;
+  AuthService.login_staff(email, password, function (data) {
     if (data.status === "success") {
       // Đăng nhập thành công, trả về token hoặc thông tin người dùng
       res.send({ token: data.token, user: data.user });
