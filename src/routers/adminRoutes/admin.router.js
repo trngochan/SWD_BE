@@ -2,7 +2,9 @@ const express = require("express");
 const router = express.Router();
 const AdmninController = require("../../controllers/adminControllers/admin.controller");
 
-router.put("/club/:id", AdmninController.approve_club);
+router.put("/club/approve/:id", AdmninController.approve_club);
+
+router.put("/club/reject/:id", AdmninController.reject_club);
 
 router.put("/staff/:id", AdmninController.approve_staff);
 

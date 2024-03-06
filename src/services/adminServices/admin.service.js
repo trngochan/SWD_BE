@@ -4,6 +4,10 @@ exports.approveClub = function (clubId, callback) {
     Club.approveClub(clubId, callback);
 };
 
+exports.rejectClub = function (clubId, callback) {
+  Club.rejectClub(clubId, callback);
+};
+
 exports.createStaff = function (newStaff, callback) {
     Staff.createStaff(newStaff, function (result) {
       callback(result);

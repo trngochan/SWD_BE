@@ -113,6 +113,7 @@ Club.getClubById = function (clubId, callback) {
 };
 
 Club.createClub = function (newClub,staffId, callback) {
+  newClub.countMember =0;
   newClub.staffId = staffId;
   newClub.approveStatus = 0;
   newClub.status = 1;
@@ -213,6 +214,30 @@ Club.approveClub = function (clubId, callback) {
   try {
     db.query(
       "UPDATE Club SET approveStatus = 1 WHERE id = ?",
+      clubId,
+      function (err, result) {
+        if (err || result.affectedRows === 0) {
+          callback({
+            status: "error",
+            message: "Error approving club or club not found",
+          });
+        } else {
+          callback({
+            status: "success",
+            message: "Club approved successfully",
+          });
+        }
+      }
+    );
+  } catch (error) {
+    callback({ status: "error", message: "Error approving club" });
+  }
+};
+
+Club.rejectClub = function (clubId, callback) {
+  try {
+    db.query(
+      "UPDATE Club SET approveStatus = 2 WHERE id = ?",
       clubId,
       function (err, result) {
         if (err || result.affectedRows === 0) {
