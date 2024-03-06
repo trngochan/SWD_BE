@@ -7,6 +7,7 @@ const Club = function (club) {
   this.countMember = club.countMember;
   this.sportName = club.sportName;
   this.sportId = club.sportId;
+  this.staffId = club.staffId;
   this.status = club.status;
   this.approveStatus = club.approveStatus;
   this.dateTime = club.dateTime;
@@ -111,40 +112,23 @@ Club.getClubById = function (clubId, callback) {
   }
 };
 
-Club.createClub = function (newClub, staffId, callback) {
-  newClub.status = 1;
-  newClub.dateTime = new Date();
+Club.createClub = function (newClub,staffId, callback) {
+  newClub.staffId = staffId;
   newClub.approveStatus = 0;
+  newClub.status = 1;
   try {
     db.query("INSERT INTO Club SET ?", newClub, function (err, result) {
       if (err) {
         console.error(err);
         callback({ status: "error", message: "Error creating club" });
       } else {
-        // Lấy id của câu lạc bộ vừa được tạo
-        const clubId = result.insertId;
-        
-        // Thêm dòng mới vào bảng StaffClub
-        const staffClubData = {
-          staff_id: staffId,
-          club_id: clubId
-        };
-
-        db.query("INSERT INTO StaffClub SET ?", staffClubData, function (err, result) {
-          if (err) {
-            console.error(err);
-            callback({ status: "error", message: "Error managing club" });
-          } else {
-            callback({
-              status: "success",
-              message: "Created club successfully",
-            });
-          }
+        callback({
+          status: "success",
+          message: "Created club successfully",
         });
       }
     });
   } catch (error) {
-    console.error(error);
     callback({ status: "error", message: "Error creating club" });
   }
 };
@@ -246,6 +230,32 @@ Club.approveClub = function (clubId, callback) {
     );
   } catch (error) {
     callback({ status: "error", message: "Error approving club" });
+  }
+};
+
+Club.getClubsByStaffId = function (staffId, callback) {
+  try {
+    db.query(
+      "SELECT * FROM Club WHERE staffId = ?",
+      staffId,
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({
+            status: "error",
+            message: "Error getting clubs by staffId",
+          });
+        } else {
+          callback({
+            status: "success",
+            result: result,
+          });
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    callback({ status: "error", message: "Error getting clubs by staffId" });
   }
 };
 
