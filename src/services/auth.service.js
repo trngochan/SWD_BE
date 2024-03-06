@@ -67,8 +67,8 @@ exports.login_admin = function (username, password, callback) {
   });
 };
 
-exports.login_staff = function (username, password, callback) {
-  Staff.getByUsername(username, function (result) {
+exports.login_staff = function (email, password, callback) {
+  Staff.getStaffByEmail(email, function (result) {
     if (result.status === "success") {
       const member = result.result;
 
