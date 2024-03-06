@@ -58,8 +58,8 @@ app.use("/api", buildingRoutes);
 app.use("/api", sportRoutes);
 app.use("/api", yardRoutes);
 
-app.use("/api/admin", adminRoutes);
-app.use("/api/staff", staffRoutes);
+app.use("/api", adminRoutes);
+app.use("/api", staffRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

@@ -285,4 +285,31 @@ ClubMember.leaving_club = function (body, callback) {
   }
 };
 
+ClubMember.getAllMembersByClubId = function (clubId, callback) {
+  try {
+    db.query(
+      "SELECT * FROM ClubMember WHERE clubId = ? AND status = 1",
+      clubId,
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({
+            status: "error",
+            message: "Error getting members by clubId",
+          });
+        } else {
+          callback({
+            status: "success",
+            result: result,
+          });
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    callback({ status: "error", message: "Error getting members by clubId" });
+  }
+};
+
+
 module.exports = ClubMember;
