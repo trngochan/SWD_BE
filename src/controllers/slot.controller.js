@@ -25,8 +25,9 @@ exports.getSlotJoined = function (req, res) {
 
 exports.getSlotNotJoin = function (req, res) {
   const idclummem = req.params.idclummem;
+  const idclub = req.params.idclub;
 
-  SlotService.getSlotNotJoin(idclummem, function (result) {
+  SlotService.getSlotNotJoin(idclummem, idclub, function (result) {
     if (result.status === "success") {
       res.status(200).json({ result: result.result });
     } else if (result.status === "error") {

@@ -83,6 +83,34 @@ ClubMemSlot.geSlotJoinedByClubMember = function (clubMem, callback) {
   }
 };
 
+ClubMemSlot.geSlotJoinedByClubMember2 = function (clubMem, callback) {
+  try {
+    db.query(
+      `SELECT Slot.*
+      FROM ClubMemSlot
+      JOIN Slot ON ClubMemSlot.slotId = Slot.id
+      WHERE ClubMemSlot.clubMemberId = ? AND ClubMemSlot.status = 1
+      ORDER BY ClubMemSlot.id DESC;`,
+      clubMem,
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({
+            status: "error",
+            message: "Error getting clubMemSlot by ID",
+          });
+        } else {
+          // Nếu có dữ liệu trả về
+          callback({ status: "success", result: result });
+        }
+      }
+    );
+  } catch (error) {
+    console.error(error);
+    callback({ status: "error", message: "Error getting clubMemSlot by ID" });
+  }
+};
+
 ClubMemSlot.getClubMemsBySlotId = function (slotId, callback) {
   try {
     db.query(

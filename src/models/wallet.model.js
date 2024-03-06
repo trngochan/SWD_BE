@@ -101,6 +101,7 @@ Wallet.createWallet = function (newWallet, callback) {
 Wallet.addPoint = function (data, callback) {
   const idWallet = data.walletId;
   const tranPoint = data.point;
+  console.log(tranPoint);
 
   try {
     // Sử dụng câu truy vấn SQL UPDATE để cập nhật thuộc tính point

@@ -21,7 +21,10 @@ router.get("/slots/:id/id_club", SlotController.getByIdClub);
 router.get("/slots/:idclummem/getSlotJoined", SlotController.getSlotJoined);
 
 // Cập nhật thông tin của một slots
-router.get("/slots/:idclummem/getSlotnotJoin", SlotController.getSlotNotJoin);
+router.get(
+  "/slots/:idclummem/:idclub/getSlotnotJoin",
+  SlotController.getSlotNotJoin
+);
 
 // Lấy thông tin của một slots cụ thể
 router.get("/slots/:id", SlotController.get_slot);

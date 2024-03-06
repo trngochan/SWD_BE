@@ -18,10 +18,10 @@ class SlotService {
     });
   }
 
-  static getSlotNotJoin(idclummem, callback) {
+  static getSlotNotJoin(idclummem, idclub, callback) {
     ClubMemSlot.getSlotJoinedIDByClubMember(idclummem, (response) => {
       if (response.status === "success") {
-        SlotModel.getSlotNotJoin(response.result, callback);
+        SlotModel.getSlotNotJoin(response.result, idclub, callback);
       } else {
         callback(response);
       }
