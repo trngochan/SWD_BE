@@ -285,17 +285,17 @@ ClubMember.leaving_club = function (body, callback) {
   }
 };
 
-ClubMember.getAllMembersByClubId = function (clubId, callback) {
+ClubMember.getClubMembersDetailByClubId = function (clubId, callback) {
   try {
     db.query(
-      "SELECT * FROM ClubMember WHERE clubId = ? AND status = 1",
+      "SELECT m.* FROM ClubMember cm JOIN Member m ON cm.memberId = m.id WHERE cm.clubId = ?",
       clubId,
       function (err, result) {
         if (err) {
           console.error(err);
           callback({
             status: "error",
-            message: "Error getting members by clubId",
+            message: "Error getting members detail by clubId",
           });
         } else {
           callback({
@@ -307,9 +307,8 @@ ClubMember.getAllMembersByClubId = function (clubId, callback) {
     );
   } catch (error) {
     console.error(error);
-    callback({ status: "error", message: "Error getting members by clubId" });
+    callback({ status: "error", message: "Error getting members detail by clubId" });
   }
 };
-
 
 module.exports = ClubMember;

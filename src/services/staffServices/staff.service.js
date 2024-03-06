@@ -6,6 +6,6 @@ exports.getManagedClubs = function (staffId,callback) {
 };
 
 exports.getAllMembersByClubId = function (clubId,callback) {
-    ClubMember.getAllMembersByClubId(clubId, callback);
+    ClubMember.getClubMembersDetailByClubId(clubId, callback);
 };
 
