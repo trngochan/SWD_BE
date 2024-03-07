@@ -10,6 +10,17 @@ exports.getAllYards = function (req, res) {
   });
 };
 
+exports.getYardsBySport = function (req, res) {
+  const sport = req.params.idsport;
+  YardService.getYardsBySport(sport, function (result) {
+    if (result.status === "success") {
+      res.status(200).json({ result: result.result });
+    } else if (result.status === "error") {
+      res.status(404).json({ message: result.message });
+    }
+  });
+};
+
 exports.getYardById = function (req, res) {
   const yardId = req.params.id;
   YardService.getYardById(yardId, function (result) {

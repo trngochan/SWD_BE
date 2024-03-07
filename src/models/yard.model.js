@@ -14,7 +14,7 @@ const Yard = function (yard) {
 
 Yard.getAllYards = function (callback) {
   try {
-    db.query("SELECT * FROM Yard", function (err, result) {
+    db.query("SELECT * FROM Yard where status = 1", function (err, result) {
       if (err) {
         console.error(err);
         callback({ status: "error", message: "Yard get all fail" });
@@ -25,6 +25,28 @@ Yard.getAllYards = function (callback) {
         });
       }
     });
+  } catch (error) {
+    callback({ status: "error", message: "Yard get all fail" });
+  }
+};
+
+Yard.getYardsBySport = function (sport, callback) {
+  try {
+    db.query(
+      "SELECT * FROM Yard where status = 1 and sportId = ?",
+      [sport],
+      function (err, result) {
+        if (err) {
+          console.error(err);
+          callback({ status: "error", message: "Yard get all fail" });
+        } else {
+          callback({
+            status: "success",
+            result: result,
+          });
+        }
+      }
+    );
   } catch (error) {
     callback({ status: "error", message: "Yard get all fail" });
   }
@@ -53,8 +75,8 @@ Yard.getYardById = function (yardId, callback) {
 };
 
 Yard.createYard = function (newYard, callback) {
-  newYard.status=1;
-  newYard.dateTime= new Date();
+  newYard.status = 1;
+  newYard.dateTime = new Date();
   try {
     db.query("INSERT INTO Yard SET ?", newYard, function (err, result) {
       if (err) {

@@ -6,6 +6,8 @@ const YardController = require("../controllers/yard.controller");
 
 router.get("/yards", YardController.getAllYards);
 
+router.get("/yards/:idsport/sport", YardController.getYardsBySport);
+
 // Lấy thông tin của một sân thi đấu cụ thể
 router.get("/yards/:id", YardController.getYardById);
 

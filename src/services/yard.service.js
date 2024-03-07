@@ -5,6 +5,10 @@ const YardService = {
     Yard.getAllYards(callback);
   },
 
+  getYardsBySport: function (sport, callback) {
+    Yard.getYardsBySport(sport, callback);
+  },
+
   getYardById: function (yardId, callback) {
     Yard.getYardById(yardId, callback);
   },
