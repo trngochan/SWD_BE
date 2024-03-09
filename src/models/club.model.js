@@ -112,8 +112,8 @@ Club.getClubById = function (clubId, callback) {
   }
 };
 
-Club.createClub = function (newClub,staffId, callback) {
-  newClub.countMember =0;
+Club.createClub = function (newClub, staffId, callback) {
+  newClub.countMember = 0;
   newClub.staffId = staffId;
   newClub.approveStatus = 0;
   newClub.status = 1;
@@ -161,11 +161,13 @@ Club.updateClub = function (clubId, updatedClub, callback) {
 };
 
 Club.deleteClub = function (clubId, callback) {
+  console.log(clubId);
   try {
     db.query(
       "UPDATE Club SET status = 0 WHERE id = ?",
       [clubId],
       function (err, result) {
+        console.log(result);
         if (result.affectedRows > 0) {
           callback({
             status: "success",
