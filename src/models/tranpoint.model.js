@@ -9,7 +9,7 @@ const Tranpoint = function (tranpoint) {
 
 Tranpoint.getAllTranpoints = function (callback) {
   try {
-    db.query("SELECT * FROM Tranpoint", function (err, result) {
+    db.query("SELECT * FROM TranPoint", function (err, result) {
       if (err) {
         console.error(err);
         callback({ status: "error", message: "Tranpoint get all fail" });
@@ -28,7 +28,7 @@ Tranpoint.getAllTranpoints = function (callback) {
 Tranpoint.getTranpointById = function (tranpointId, callback) {
   try {
     db.query(
-      "SELECT * FROM Tranpoint WHERE id = ? and status = 1",
+      "SELECT * FROM TranPoint WHERE id = ? and status = 1",
       tranpointId,
       function (err, result) {
         if (err) {
@@ -89,33 +89,45 @@ Tranpoint.get_tranpoint_new = function (callback) {
 };
 
 Tranpoint.createTranpoint = function (newTranpoint, callback) {
-  newTranpoint.status = 1;
-  newTranpoint.dateTime = new Date();
-  console.log(newTranpoint);
-  try {
-    db.query(
-      "INSERT INTO Tranpoint SET ?",
-      newTranpoint,
-      function (err, result) {
-        if (err) {
-          callback({ status: "error", message: "Error creating tranpoint" });
-        } else {
-          callback({
-            status: "success",
-            message: "Created tranpoint successfully",
-          });
+    // Cập nhật các bản ghi có status = 0 thành status = 1
+    try {
+      db.query(
+        "UPDATE TranPoint SET status = 0 WHERE status = 1",
+        function (err, result) {
+          if (err) {
+            console.log(err);
+            callback({ status: "error", message: "Error updating tranpoints" });
+          } else {
+            // Sau khi cập nhật thành công, thêm bản ghi mới với status = 1
+            newTranpoint.status = 1;
+            db.query(
+              "INSERT INTO TranPoint SET ?",
+              newTranpoint,
+              function (err, result) {
+                if (err) {
+                  console.log(err);
+                  callback({ status: "error", message: "Error creating tranpoint" });
+                } else {
+                  callback({
+                    status: "success",
+                    message: "Created tranpoint successfully",
+                  });
+                }
+              }
+            );
+          }
         }
-      }
-    );
-  } catch (error) {
-    callback({ status: "error", message: "Error creating tranpoint" });
-  }
-};
+      );
+    } catch (error) {
+      callback({ status: "error", message: "Error creating tranpoint" });
+    }
+  };
+  
 
 Tranpoint.updateTranpoint = function (tranpointId, updatedTranpoint, callback) {
   try {
     db.query(
-      "UPDATE Tranpoint SET ? WHERE id = ?",
+      "UPDATE TranPoint SET ? WHERE id = ?",
       [updatedTranpoint, tranpointId],
       function (err, result) {
         if (err) {
@@ -140,7 +152,7 @@ Tranpoint.updateTranpoint = function (tranpointId, updatedTranpoint, callback) {
 Tranpoint.deleteTranpoint = function (tranpointId, callback) {
   try {
     db.query(
-      "UPDATE Tranpoint SET status = 0 WHERE id = ?",
+      "UPDATE TranPoint SET status = 0 WHERE id = ?",
       [tranpointId],
       function (err, result) {
         if (result.affectedRows > 0) {
