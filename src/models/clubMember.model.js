@@ -307,7 +307,10 @@ ClubMember.getClubMembersDetailByClubId = function (clubId, callback) {
     );
   } catch (error) {
     console.error(error);
-    callback({ status: "error", message: "Error getting members detail by clubId" });
+    callback({
+      status: "error",
+      message: "Error getting members detail by clubId",
+    });
   }
 };
 
