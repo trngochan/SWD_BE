@@ -288,7 +288,7 @@ ClubMember.leaving_club = function (body, callback) {
 ClubMember.getClubMembersDetailByClubId = function (clubId, callback) {
   try {
     db.query(
-      "SELECT m.* FROM ClubMember cm JOIN Member m ON cm.memberId = m.id WHERE cm.clubId = ?",
+      "SELECT m.* FROM ClubMember cm JOIN Member m ON cm.memberId = m.id WHERE cm.clubId = ? and cm.status = 1 and m.status = 1",
       clubId,
       function (err, result) {
         if (err) {
