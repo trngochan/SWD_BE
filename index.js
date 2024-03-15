@@ -4,6 +4,9 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const swaggerJSDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger-output.json");
 
 const tranpointRoutes = require("./src/routers/tranpoint.router");
 const transactionHistoryPointRoutes = require("./src/routers/transactionHistoryPoint.router");
@@ -36,30 +39,42 @@ app.use(
   session({ secret: "your-secret-key", resave: true, saveUninitialized: true })
 );
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+/**
+ * @swagger
+ * /api/users:
+ *   get:
+ *     summary: Lấy thông tin người dùng
+ *     description: Trả về thông tin của tất cả người dùng
+ *     responses:
+ *       '200':
+ *         description: Thành công
+ */
 //Import api
+// authMiddleware.authenticateToken
+
 app.use("/api", authRoutes);
-app.use("/api", tranpointRoutes);
-app.use("/api", transactionHistoryPointRoutes);
-app.use("/api", clubRoutes);
-app.use("/api", clubMemberRoutes);
-app.use("/api", clubMemSlotRoutes);
-app.use("/api", slotRoutes);
-// authMiddleware.authenticateToken
-// authMiddleware.authenticateToken
-// authMiddleware.authenticateToken
-// authMiddleware.authenticateToken
-// authMiddleware.authenticateToken
-// authMiddleware.authenticateToken
+app.use("/api", authMiddleware.authenticateToken, tranpointRoutes);
+app.use(
+  "/api",
+  authMiddleware.authenticateToken,
+  transactionHistoryPointRoutes
+);
+app.use("/api", authMiddleware.authenticateToken, clubRoutes);
+app.use("/api", authMiddleware.authenticateToken, clubMemberRoutes);
+app.use("/api", authMiddleware.authenticateToken, clubMemSlotRoutes);
+app.use("/api", authMiddleware.authenticateToken, slotRoutes);
 
-app.use("/api", memberRoutes);
-app.use("/api", walletRoutes);
-app.use("/api", areaRoutes);
-app.use("/api", buildingRoutes);
-app.use("/api", sportRoutes);
-app.use("/api", yardRoutes);
+app.use("/api", authMiddleware.authenticateToken, memberRoutes);
+app.use("/api", authMiddleware.authenticateToken, walletRoutes);
+app.use("/api", authMiddleware.authenticateToken, areaRoutes);
+app.use("/api", authMiddleware.authenticateToken, buildingRoutes);
+app.use("/api", authMiddleware.authenticateToken, sportRoutes);
+app.use("/api", authMiddleware.authenticateToken, yardRoutes);
 
-app.use("/api", adminRoutes);
-app.use("/api", staffRoutes);
+app.use("/api", authMiddleware.authenticateToken, adminRoutes);
+app.use("/api", authMiddleware.authenticateToken, staffRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

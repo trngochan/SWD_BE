@@ -23,7 +23,9 @@ exports.get_building = function (req, res) {
 };
 
 exports.get_all_buildings = function (req, res) {
-  BuildingService.getAllBuildings(function (result) {
+  const filters = req.query;
+
+  BuildingService.getAllBuildings(filters, function (result) {
     if (result.status === "success") {
       res.status(200).json({ result: result.result });
     } else if (result.status === "error") {

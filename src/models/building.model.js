@@ -1,3 +1,4 @@
+const { query } = require("express");
 const db = require("../common/connect");
 
 const Building = function (building) {
@@ -9,8 +10,8 @@ const Building = function (building) {
 };
 
 Building.createBuilding = function (newBuilding, callback) {
-  newBuilding.status=1;
-  newBuilding.dateTime= new Date();
+  newBuilding.status = 1;
+  newBuilding.dateTime = new Date();
   try {
     db.query("INSERT INTO Building SET ?", newBuilding, function (err, result) {
       if (err) {
@@ -56,9 +57,25 @@ Building.getBuildingById = function (buildingId, callback) {
   }
 };
 
-Building.getAllBuildings = function (callback) {
+Building.getAllBuildings = function (filters, callback) {
   try {
-    db.query("SELECT * FROM Building", function (err, result) {
+    var query = "SELECT * FROM Building where status = 1";
+    // Kiểm tra xem có filters nào được truyền vào không
+    if (filters && Object.keys(filters).length > 0) {
+      query += " AND ";
+
+      // Xây dựng điều kiện WHERE từ các filters
+      const conditions = [];
+      Object.keys(filters).forEach((key) => {
+        conditions.push(`${key} = ?`);
+      });
+      query += conditions.join(" AND ");
+    }
+
+    // Lấy giá trị của filters để truyền vào db.query
+    const filterValues = Object.values(filters || []);
+
+    db.query(query, filterValues, function (err, result) {
       if (err) {
         console.error(err);
         callback({ status: "error", message: "Building get all fail" });

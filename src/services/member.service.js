@@ -3,8 +3,8 @@ const MemberModel = require("../models/member.model");
 const WalletModel = require("../models/wallet.model");
 
 class MemberService {
-  static getAllMembers(callback) {
-    MemberModel.getAllMembers(callback);
+  static getAllMembers(filters, callback) {
+    MemberModel.getAllMembers(filters, callback);
   }
 
   static createMember(newMember, callback) {

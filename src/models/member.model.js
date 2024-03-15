@@ -15,9 +15,26 @@ const Member = function (member) {
   this.dateTime = member.dateTime;
 };
 
-Member.getAllMembers = function (callback) {
+Member.getAllMembers = function (filters, callback) {
   try {
-    db.query("SELECT * FROM Member", function (err, result) {
+    let query = "SELECT * FROM Member WHERE status = 1"; // Điều kiện mặc định
+
+    // Kiểm tra xem có filters nào được truyền vào không
+    if (filters && Object.keys(filters).length > 0) {
+      query += " AND ";
+
+      // Xây dựng điều kiện WHERE từ các filters
+      const conditions = [];
+      Object.keys(filters).forEach((key) => {
+        conditions.push(`${key} = ?`);
+      });
+      query += conditions.join(" AND ");
+    }
+
+    // Lấy giá trị của filters để truyền vào db.query
+    const filterValues = Object.values(filters || []);
+
+    db.query(query, filterValues, function (err, result) {
       if (err) {
         console.error(err);
         callback({ status: "error", message: "Member get all fail" });

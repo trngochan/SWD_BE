@@ -12,8 +12,8 @@ exports.getBuildingById = function (buildingId, callback) {
   });
 };
 
-exports.getAllBuildings = function (callback) {
-  Building.getAllBuildings(function (result) {
+exports.getAllBuildings = function (filters, callback) {
+  Building.getAllBuildings(filters, function (result) {
     callback(result);
   });
 };

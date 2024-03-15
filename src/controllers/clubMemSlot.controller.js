@@ -15,7 +15,6 @@ exports.create = function (req, res) {
   const newClubMemSlot = req.body.newClubMemSlot;
   const inforWallet = req.body.inforWallet;
   const tranPoint = req.body.tranPoint;
-  console.log(req.body);
   ClubMemSlotService.createClubMemSlot(
     newClubMemSlot,
     inforWallet,

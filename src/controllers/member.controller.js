@@ -2,7 +2,8 @@
 const MemberService = require("../services/member.service");
 
 exports.get_list = function (req, res) {
-  MemberService.getAllMembers(function (result) {
+  const filters = req.query;
+  MemberService.getAllMembers(filters, function (result) {
     if (result.status === "success") {
       res.status(200).json({ result: result.result });
     } else if (result.status === "error") {
