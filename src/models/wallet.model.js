@@ -124,6 +124,36 @@ Wallet.addPoint = function (data, callback) {
   }
 };
 
+// Wallet.decreaPoint = function (data, callback) {
+//   const idWallet = data.walletId;
+//   const tranPoint = data.point;
+
+//   console.log({
+//     walletId: idWallet,
+//     point: tranPoint,
+//   });
+
+//   try {
+//     // Sử dụng câu truy vấn SQL UPDATE để cập nhật thuộc tính point
+//     db.query(
+//       "UPDATE Wallet SET point = point - ? WHERE id = ?",
+//       [tranPoint, idWallet],
+//       function (err, result) {
+//         if (err) {
+//           callback({ status: "error", message: "Error updating wallet" });
+//         } else {
+//           callback({
+//             status: "success",
+//             message: "Updated wallet successfully",
+//           });
+//         }
+//       }
+//     );
+//   } catch (error) {
+//     callback({ status: "error", message: "Error updating wallet" });
+//   }
+// };
+
 Wallet.decreaPoint = function (data, callback) {
   const idWallet = data.walletId;
   const tranPoint = data.point;
@@ -134,7 +164,7 @@ Wallet.decreaPoint = function (data, callback) {
   });
 
   try {
-    // Sử dụng câu truy vấn SQL UPDATE để cập nhật thuộc tính point
+    // Sử dụng câu truy vấn SQL UPDATE để cập nhật thuộc tính point của Wallet
     db.query(
       "UPDATE Wallet SET point = point - ? WHERE id = ?",
       [tranPoint, idWallet],
@@ -142,10 +172,47 @@ Wallet.decreaPoint = function (data, callback) {
         if (err) {
           callback({ status: "error", message: "Error updating wallet" });
         } else {
-          callback({
-            status: "success",
-            message: "Updated wallet successfully",
-          });
+          // Kiểm tra giá trị point mới của Wallet
+          db.query(
+            "SELECT point, memberId FROM Wallet WHERE id = ?",
+            [idWallet],
+            function (err, rows) {
+              if (err) {
+                callback({
+                  status: "error",
+                  message: "Error retrieving updated point",
+                });
+              } else {
+                const newPoint = rows[0].point;
+                // Nếu point mới nhỏ hơn 500, cập nhật trạng thái của Member
+                if (newPoint < 500) {
+                  db.query(
+                    "UPDATE Member SET status = 0 WHERE id = ?",
+                    [rows[0].memberId],
+                    function (err, result) {
+                      if (err) {
+                        callback({
+                          status: "error",
+                          message: "Error updating member status",
+                        });
+                      } else {
+                        callback({
+                          status: "success",
+                          message:
+                            "Updated wallet and member status successfully",
+                        });
+                      }
+                    }
+                  );
+                } else {
+                  callback({
+                    status: "success",
+                    message: "Updated wallet successfully",
+                  });
+                }
+              }
+            }
+          );
         }
       }
     );
@@ -153,6 +220,7 @@ Wallet.decreaPoint = function (data, callback) {
     callback({ status: "error", message: "Error updating wallet" });
   }
 };
+
 Wallet.updateWallet = function (walletId, updatedWallet, callback) {
   try {
     db.query(
