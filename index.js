@@ -69,7 +69,7 @@ app.use("/api", authMiddleware.authenticateToken, slotRoutes);
 app.use("/api", authMiddleware.authenticateToken, memberRoutes);
 app.use("/api", authMiddleware.authenticateToken, walletRoutes);
 app.use("/api", authMiddleware.authenticateToken, areaRoutes);
-app.use("/api", authMiddleware.authenticateToken, buildingRoutes);
+app.use("/api", buildingRoutes);
 app.use("/api", authMiddleware.authenticateToken, sportRoutes);
 app.use("/api", authMiddleware.authenticateToken, yardRoutes);
 
