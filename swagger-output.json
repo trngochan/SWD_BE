@@ -1,14 +1,121 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "My API",
+    "title": "SP24_32_SWD_VinhomeCourtBooking",
     "description": "Description",
     "version": "1.0.0"
   },
   "host": "localhost:3000",
   "basePath": "/",
   "schemes": ["http"],
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ],
   "paths": {
+    "/api/members": {
+      "get": {
+        "description": "get all thanh vien moi",
+        "parameters": [
+          {
+            "name": "gender",
+            "in": "query",
+            "description": "Filter members by name",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "buildingId",
+            "in": "query",
+            "description": "Filter members by age",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "description": "Endpoint để thêm mới thành viên câu lạc bộ.",
+        "responses": {
+          "200": {
+            "description": "Dữ liệu được tạo thành công."
+          },
+          "404": {
+            "description": "Không tìm thấy tài nguyên."
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dữ liệu đầu vào cho endpoint này.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "ID của thành viên"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Tên của thành viên"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "Địa chỉ email của thành viên"
+                },
+                "password": {
+                  "type": "string",
+                  "description": "Mật khẩu của thành viên"
+                },
+                "image": {
+                  "type": "string",
+                  "description": "Đường dẫn đến hình ảnh của thành viên"
+                },
+                "gender": {
+                  "type": "string",
+                  "description": "Giới tính của thành viên"
+                },
+                "buildingId": {
+                  "type": "integer",
+                  "description": "ID của tòa nhà mà thành viên đang sinh sống"
+                },
+                "buildingName": {
+                  "type": "string",
+                  "description": "Tên của tòa nhà mà thành viên đang sinh sống"
+                },
+                "phoneNumber": {
+                  "type": "string",
+                  "description": "Số điện thoại của thành viên"
+                }
+              },
+              "required": ["name", "email", "password", "buildingId"]
+            }
+          }
+        ]
+      }
+    },
     "/api/login-member": {
       "post": {
         "description": "",
@@ -1175,80 +1282,6 @@
             "description": "Not Found"
           }
         }
-      }
-    },
-    "/api/members": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      },
-      "post": {
-        "description": "Endpoint để thêm mới thành viên câu lạc bộ.",
-        "responses": {
-          "200": {
-            "description": "Dữ liệu được tạo thành công."
-          },
-          "404": {
-            "description": "Không tìm thấy tài nguyên."
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Dữ liệu đầu vào cho endpoint này.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "integer",
-                  "description": "ID của thành viên"
-                },
-                "name": {
-                  "type": "string",
-                  "description": "Tên của thành viên"
-                },
-                "email": {
-                  "type": "string",
-                  "description": "Địa chỉ email của thành viên"
-                },
-                "password": {
-                  "type": "string",
-                  "description": "Mật khẩu của thành viên"
-                },
-                "image": {
-                  "type": "string",
-                  "description": "Đường dẫn đến hình ảnh của thành viên"
-                },
-                "gender": {
-                  "type": "string",
-                  "description": "Giới tính của thành viên"
-                },
-                "buildingId": {
-                  "type": "integer",
-                  "description": "ID của tòa nhà mà thành viên đang sinh sống"
-                },
-                "buildingName": {
-                  "type": "string",
-                  "description": "Tên của tòa nhà mà thành viên đang sinh sống"
-                },
-                "phoneNumber": {
-                  "type": "string",
-                  "description": "Số điện thoại của thành viên"
-                }
-              },
-              "required": ["name", "email", "password", "buildingId"]
-            }
-          }
-        ]
       }
     },
     "/api/members/{id}": {

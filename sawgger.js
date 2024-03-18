@@ -2,7 +2,7 @@ const swaggerAutogen = require("swagger-autogen")();
 
 const doc = {
   info: {
-    title: "My API",
+    title: "SP24_32_SWD_VinhomeCourtBooking",
     description: "Description",
   },
   host: "localhost:3000",

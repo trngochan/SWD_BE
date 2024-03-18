@@ -55,6 +55,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // authMiddleware.authenticateToken
 
 app.use("/api", authRoutes);
+app.use("/api", buildingRoutes);
 app.use("/api", authMiddleware.authenticateToken, tranpointRoutes);
 app.use(
   "/api",
@@ -69,7 +70,6 @@ app.use("/api", authMiddleware.authenticateToken, slotRoutes);
 app.use("/api", authMiddleware.authenticateToken, memberRoutes);
 app.use("/api", authMiddleware.authenticateToken, walletRoutes);
 app.use("/api", authMiddleware.authenticateToken, areaRoutes);
-app.use("/api", buildingRoutes);
 app.use("/api", authMiddleware.authenticateToken, sportRoutes);
 app.use("/api", authMiddleware.authenticateToken, yardRoutes);
 
